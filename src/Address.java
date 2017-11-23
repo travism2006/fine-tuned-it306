@@ -4,7 +4,7 @@ public class Address {
 	private String streetAddress;
 	private String city;
 	private String state;
-	private String zipCode;
+	private int zipCode;
 
 	/**
 	 * Default constructor
@@ -18,7 +18,7 @@ public class Address {
 	 * @param state
 	 * @param zipCode
 	 */
-	public Address(String streetAddress, String city, String state, String zipCode) {
+	public Address(String streetAddress, String city, String state, int zipCode) {
 		this.streetAddress = streetAddress;
 		this.city = city;
 		this.state = state;
@@ -28,70 +28,66 @@ public class Address {
 	/**
 	 * @return the streetAddress
 	 */
-	public String getStreetAddress() {
-		return streetAddress;
-	}
+	public String getStreetAddress()
+	{return streetAddress;}
 
 	/**
-	 * @param streetAddress
-	 *            the streetAddress to set
+	 * @param streetAddress the streetAddress to set
 	 */
-	public void setStreetAddress(String streetAddress) {
+	public void setStreetAddress(String streetAddress)
+	{
 		this.streetAddress = streetAddress;
 	}
 
 	/**
 	 * @return the city
 	 */
-	public String getCity() {
-		return city;
-	}
+	public String getCity()
+	{return city;}
 
 	/**
-	 * @param city
-	 *            the city to set
+	 * @param city the city to set
 	 */
-	public void setCity(String city) {
+	public void setCity(String city)
+	{
 		this.city = city;
 	}
 
 	/**
 	 * @return the state
 	 */
-	public String getState() {
-		return state;
-	}
+	public String getState()
+	{return state;}
 
 	/**
-	 * @param state
-	 *            the state to set
+	 * @param state the state to set
 	 */
-	public void setState(String state) {
+	public void setState(String state)
+	{
 		this.state = state;
 	}
 
 	/**
 	 * @return the zipCode
 	 */
-	public String getZipCode() {
-		return zipCode;
-	}
+	public int getZipCode()
+	{return zipCode;}
 
 	/**
-	 * @param zipCode
-	 *            the zipCode to set
+	 * @param zipCode the zipCode to set
 	 */
-	public void setZipCode(String zipCode) {
-		this.zipCode = zipCode;
-	}
+	public void setZipCode(int zipCode)
+	{this.zipCode = zipCode;}
 
 	/**
 	 * convert the object to a string output
 	 */
 	@Override
-	public String toString() {
-		return "Address [streetAddress=" + streetAddress + ", city=" + city + ", state=" + state + ", zipCode="
-				+ zipCode + "]";
+	public String toString()
+	{
+		String out = String.format("Street Address: %s\nCity: %s\nState: %s\nZipcode: %d\n\n",
+					  streetAddress, city, state,zipcode);
+		return out;
 	}
 
 }
