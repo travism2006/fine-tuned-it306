@@ -1,24 +1,26 @@
-package Phase4;
+package vmspro;
 
-import Phase4.VMSPro_Constants.CarColors;
+import java.util.HashMap;
+
+import vmspro.VMSPro_Constants.CarColors;
 
 /**
- * A DDC for the parent class 'Vehicle'.  Has all assignments for any arbitrary
- * vehicle and lets child classes do independent field initialization.
+ * A DDC that defines this parent class 'Vehicle'.  Has all assignments for any
+ * arbitrary vehicle, leting child classes do independent field initialization.
  * @author hammar
  * @author tmitchu2
  * */
-public class Vehicle
+public class Vehicle implements VMSPro_Standard_Behavior
 {
 	private int lotNumber;
 	private static int carTotal = 0;
 	private String make;
 	private String model;
-	private VMSPro_Constants.CarColors color;
+	private CarColors color;
 	private int year;
 	private static final int MIN_YEAR = 0;
 	private String vin;
-	private Customer cust;
+	private HashMap<Integer, Customer> cust;
 
 	/**
 	 * Default constructor for id and lot id tracking.
@@ -36,8 +38,9 @@ public class Vehicle
 	 * @param someColor the color chosen for this car
 	 * @param someYear the year of this car
 	 * @param someVIN the vin for the car, once set here never changed later
+	 * @param someCust the customer to be linked to
 	 */
-	public Vehicle(String someMake, String someModel, VMSPro_Constants.CarColors someColor, int someYear, String someVIN, Customer someCust)
+	public Vehicle(String someMake, String someModel, CarColors someColor, int someYear, String someVIN, Customer someCust)
 	{
 		this();
 		this.make = someMake;
@@ -45,7 +48,7 @@ public class Vehicle
 		this.color = someColor;
 		this.year = someYear;
 		this.vin = someVIN;
-		this.cust = someCust;
+		this.cust.put(someCust.getCustomerId(), someCust);
 	}
 	
 	/**
@@ -56,7 +59,7 @@ public class Vehicle
 	 */
 	public boolean setMake(String someMake)
 	{
-		if(VMSProApp.checkString(someMake))
+		if(VMSPro.checkString(someMake))
 		{
 			this.make = someMake;
 			return true;
@@ -71,7 +74,7 @@ public class Vehicle
 	 */
 	public boolean setModel(String someModel)
 	{
-		if(VMSProApp.checkString(someModel))
+		if(VMSPro.checkString(someModel))
 		{
 			this.model = someModel;
 			return true;
@@ -83,7 +86,7 @@ public class Vehicle
 	 * Uses the enumeration of colors supported to assign the respective field.
 	 * @param color the color to set
 	 */
-	public void setColor(VMSPro_Constants.CarColors someColor)
+	public void setColor(CarColors someColor)
 	{this.color = someColor;}
 	
 	/**
@@ -106,21 +109,16 @@ public class Vehicle
 	 * Nonvalidating method for associating a single customer to this
 	 * car.  Does not allow null pointers to a customer object.
 	 * @param someCust the customer to be linked to
-	 * @return the success of assignment, or failure if null pointer
 	 * */
-	public boolean linkCustomer(Customer someCust)
-	{
-		if(someCust == null)return false;
-		this.cust = someCust;
-		return true;
-	}
+	public void linkCustomer(Customer someCust)
+	{this.cust.put(someCust.getCustomerId(), someCust);}
 	
 	/**
 	 * Returns the customer linked to this vehicle.
 	 * @return the customer linked to this vehicle
 	 * */
 	public Customer getCustomer()
-	{return this.cust;}
+	{return (Customer) cust.values().toArray()[0];}
 	
 	/**
 	 * Returns the lot # of this car.
