@@ -1,93 +1,109 @@
+package vmspro;
 
-public class Address {
-
+/**
+ * DDC for aggregate relationship to form between addresses and customers.
+ * @author hammar
+ * @author tmitchu2
+ * */
+public final class Address
+{
 	private String streetAddress;
 	private String city;
 	private String state;
 	private int zipCode;
-
+	
 	/**
-	 * Default constructor
+	 * Specific constructor for each field.
+	 * @param someStreetAddress
+	 * @param someCity
+	 * @param someState the state where this address is located in
+	 * @param someZip the zipcode for this address
 	 */
-	public Address() {
+	public Address(String someStreetAddress, String someCity, String someState, int someZip)
+	{
+		this.streetAddress = someStreetAddress;
+		this.city = someCity;
+		this.state = someState;
+		this.zipCode = someZip;
 	}
 
 	/**
-	 * @param streetAddress
-	 * @param city
-	 * @param state
-	 * @param zipCode
-	 */
-	public Address(String streetAddress, String city, String state, int zipCode) {
-		this.streetAddress = streetAddress;
-		this.city = city;
-		this.state = state;
-		this.zipCode = zipCode;
-	}
-
-	/**
-	 * @return the streetAddress
-	 */
+	 * Returns the value of the street address.
+	 * @return the value of the street address
+	 * */
 	public String getStreetAddress()
-	{return streetAddress;}
+	{return this.streetAddress;}
 
 	/**
-	 * @param streetAddress the streetAddress to set
-	 */
-	public void setStreetAddress(String streetAddress)
+	 * Specifies the house number or apartment number on a street.
+	 * Validates for null attributes and pointers throug static methods in VMS Pro.
+	 * @param someStreet the street address with apt. # or house number
+	 * @return whether or not the assigning of data worked
+	 * */
+	public boolean setStreetAddress(String someStreet)
 	{
-		this.streetAddress = streetAddress;
+		if(VMSPro.checkString(someStreet))
+		{
+			this.streetAddress = someStreet;
+			return true;
+		}
+		return false;
 	}
 
 	/**
-	 * @return the city
-	 */
+	 * Returns the string value for the city field.
+	 * @return the string value for the city field
+	 * */
 	public String getCity()
-	{return city;}
+	{return this.city;}
 
 	/**
-	 * @param city the city to set
-	 */
-	public void setCity(String city)
+	 * Validates for null attributes and pointers throug static methods in VMS Pro.
+	 * Will attempt to assign to the city field if not null.
+	 * @param someCity the city to be assigned for the respective field
+	 * @return whether or not the assigning of data worked
+	 * */
+	public boolean setCity(String someCity)
 	{
-		this.city = city;
+		if(VMSPro.checkString(someCity))
+		{
+			this.city = someCity;
+			return true;
+		}
+		return false;
 	}
 
 	/**
-	 * @return the state
-	 */
+	 * Returns the string value for the state field.
+	 * @return the string value for the state field
+	 * */
 	public String getState()
-	{return state;}
+	{return this.state;}
 
 	/**
-	 * @param state the state to set
-	 */
-	public void setState(String state)
+	 * Validates for null attributes and pointers throug static methods in VMS Pro.
+	 * Will attempt to assign to the state field if not null.
+	 * @param someState the state to be assigned for the respective field
+	 * @return whether or not the assigning of data worked
+	 * */
+	public boolean setState(String someState)
 	{
-		this.state = state;
+		if(VMSPro.checkString(someState))
+		{
+			this.city = someState;
+			return true;
+		}
+		return false;
 	}
-
+	
 	/**
-	 * @return the zipCode
-	 */
-	public int getZipCode()
-	{return zipCode;}
-
-	/**
-	 * @param zipCode the zipCode to set
-	 */
-	public void setZipCode(int zipCode)
-	{this.zipCode = zipCode;}
-
-	/**
-	 * convert the object to a string output
-	 */
-	@Override
+	 * Returns the human readable string representation of this address obj.
+	 * @return the human readable string representation of this address obj
+	 * */
 	public String toString()
 	{
 		String out = String.format("Street Address: %s\nCity: %s\nState: %s\nZipcode: %d\n\n",
-					  streetAddress, city, state,zipcode);
+				  this.streetAddress, this.city, this.state,this.zipCode);
 		return out;
 	}
-
 }
