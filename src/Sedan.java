@@ -16,6 +16,21 @@ public final class Sedan extends Vehicle
 	 * @param someMake the manufacturer of this car
 	 * @param someModel the model of the car obj
 	 * @param someColor the color chosen for this car
+	 * @param someYear the year of this car
+	 * @param someVIN the vin for the car, once set here never changed later
+	 * @param mayConvert the boolean saying whether or not this converts
+	 * */
+	public Sedan(String makeN, String modelN, CarColors colorN, int yearN, String someVIN, boolean mayConvert)
+	{
+		super(makeN, modelN, colorN, yearN, someVIN);
+		this.isConvertible = mayConvert;
+	}
+	
+	/**
+	 * Specific constructor for the new field as well as fields for super call.
+	 * @param someMake the manufacturer of this car
+	 * @param someModel the model of the car obj
+	 * @param someColor the color chosen for this car
 	 * @param someCust the customer to be linked to
 	 * @param someYear the year of this car
 	 * @param someVIN the vin for the car, once set here never changed later

@@ -16,6 +16,21 @@ public final class Van extends Vehicle
 	 * @param someMake the manufacturer of this car
 	 * @param someModel the model of the car obj
 	 * @param someColor the color chosen for this car
+	 * @param someYear the year of this car
+	 * @param someVIN the vin for the car, once set here never changed later
+	 * @param someCargo the amount of cargo space in the van
+	 * */
+	public Van(String makeN, String modelN, CarColors colorN, int yearN, String someVIN, double someCargo)
+	{
+		super(makeN, modelN, colorN, yearN, someVIN);
+		this.cargoSpace = someCargo;
+	}
+	
+	/**
+	 * Specific constructor for the new field.
+	 * @param someMake the manufacturer of this car
+	 * @param someModel the model of the car obj
+	 * @param someColor the color chosen for this car
 	 * @param someCust the customer to be linked to
 	 * @param someYear the year of this car
 	 * @param someVIN the vin for the car, once set here never changed later

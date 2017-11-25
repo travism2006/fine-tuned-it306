@@ -38,11 +38,29 @@ public class Vehicle implements VMSPro_Standard_Behavior
 	 * @param someColor the color chosen for this car
 	 * @param someYear the year of this car
 	 * @param someVIN the vin for the car, once set here never changed later
+	 */
+	public Vehicle(String someMake, String someModel, CarColors someColor, int someYear, String someVIN)
+	{
+		this();
+		this.make = someMake;
+		this.model = someModel;
+		this.color = someColor;
+		this.year = someYear;
+		this.vin = someVIN;
+	}
+	
+	/**
+	 * Specific constructor for assignment of inputs to respective fields.
+	 * @param someMake the manufacturer of this car
+	 * @param someModel the model of the car obj
+	 * @param someColor the color chosen for this car
+	 * @param someYear the year of this car
+	 * @param someVIN the vin for the car, once set here never changed later
 	 * @param someCust the customer to be linked to
 	 */
 	public Vehicle(String someMake, String someModel, CarColors someColor, int someYear, String someVIN, Customer someCust)
 	{
-		this();
+		this(someMake,someModel,someColor,someYear,someVIN);
 		this.make = someMake;
 		this.model = someModel;
 		this.color = someColor;
