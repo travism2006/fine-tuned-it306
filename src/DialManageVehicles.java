@@ -78,10 +78,11 @@ public class DialManageVehicles extends JDialog
 				switch(ans)
 				{
 				case "SEDAN":
-					makeAndAddSedan(newCarForm);
+					Vehicle car = makeAndAddSedan(newCarForm);
+					totalCarArea.append(car.toString());
 					break;
 				case "TRUCK":
-					//makeAndAddTruck(newCarForm);
+					makeAndAddTruck(newCarForm);
 					break;
 				case "VAN":
 					//makeAndAddVan(newCarForm);
@@ -142,7 +143,7 @@ public class DialManageVehicles extends JDialog
 		});
 		
 		//pseudo-table
-		totalCarArea = new JTextArea(VMSPro_Constants.TxtCarHeader,
+		totalCarArea = new JTextArea(VMSPro_Constants.TxtCarFullHeader,
 				VMSPro_Constants.TxtAreaHeight,VMSPro_Constants.TxtAreaWidth);
 		fillTable(totalCarArea, app);
 		
@@ -192,7 +193,7 @@ public class DialManageVehicles extends JDialog
 	}
 	
 	/**Takes the panel's input fields and makes a Sedan and adds to VMS Pro.*/
-	private void makeAndAddSedan(JPanel somePanel)
+	private Vehicle makeAndAddSedan(JPanel somePanel)
 	{
 		//make sedan specific input field and label
 		JLabel convertiblelbl = new JLabel("Convertible:");
@@ -227,6 +228,44 @@ public class DialManageVehicles extends JDialog
 		newSedan = new Sedan(make, model, color,year, vin,mayConert);
 		
 		sysApp.addCar(newSedan);
+		return newSedan;
+	}
+	
+	private void makeAndAddTruck(JPanel somePanel)
+	{
+		//make sedan specific input field and label
+		JLabel carrylbl = new JLabel("Carrying Capacity:");
+		JLabel towlbl = new JLabel("Towing Capacity:");
+		JTextField carryInput = new JTextField(VMSPro_Constants.pixelColWidth);
+		JTextField towInput = new JTextField(VMSPro_Constants.pixelColWidth);
+		somePanel.add(carrylbl);
+		somePanel.add(carryInput);
+		somePanel.add(towlbl);somePanel.add(towInput);
+		
+		checkVehicleInput(somePanel);
+		
+		String vin = vinInput.getText();
+		String make = makeInput.getText();
+		String model = modelInput.getText();
+		int year;
+		try
+		{
+			year = Integer.parseInt(yearInput.getText());
+		} catch (NumberFormatException e1)
+		{year = 1;}
+		CarColors color = (CarColors) colorInput.getSelectedItem();
+		Customer custX;
+		try
+		{
+			custX = sysApp.getCustomerByID(
+					Integer.parseInt(custInput.getText()));
+		} catch (NumberFormatException e)
+		{custX = null;}
+		double tow = Double.parseDouble(towInput.getText());
+		double carry = Double.parseDouble(carryInput.getText());
+		
+		Vehicle newTruck = new Truck(make, model, color,year, vin,custX, tow,carry);
+		this.sysApp.addCar(newTruck);
 	}
 	
 	/**
