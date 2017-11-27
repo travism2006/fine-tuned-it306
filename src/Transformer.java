@@ -14,17 +14,9 @@ public class Transformer {
 	 * @param customerList
 	 * @return
 	 */
-	public static Set<Customer> sortCustomersByFistName(Set<Customer> customerList) {
-
-		//Collections.sort(customerList, Comparator.comparing(Customer::getFirstName));
-		Set<Customer> sorted = new TreeSet<Customer>(new Comparator<Customer>() {
-            @Override
-            public int compare(Customer o1, Customer o2) {
-                return o2.compareTo(o1);
-            }
-        });
-		
-		sorted.
+	public static List<Customer> sortCustomersByFistName(List<Customer> customerList) {
+		 
+		 	Collections.sort(customerList, Comparator.comparing(Customer::getFirstName));
 
 		return customerList;
 	}
