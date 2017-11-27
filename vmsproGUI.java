@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -13,12 +14,17 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EtchedBorder;
+
+import vmspro.VMSPro_Constants.CarTypes;
+
 import java.awt.Toolkit;
+import java.awt.Font;
 
 /**
  * Gui DDC file for the VMS Pro application.  This is primarily build off of
@@ -82,8 +88,7 @@ public class vmsproGUI extends JFrame
 		 {
 			public void actionPerformed(ActionEvent e)
 			{
-				Component comp = (Component)e.getSource();
-				JFrame fr = (JFrame)SwingUtilities.getRoot(comp);
+				JFrame fr = getFrame(e);
 				DialManageCustomers mngClients = new DialManageCustomers(fr,project);
 				mngClients.setVisible(true);
 			}});
@@ -120,7 +125,162 @@ public class vmsproGUI extends JFrame
 		);
 		gl_clientPanel.setAutoCreateGaps(true);
 		
+		JButton btnAllVehicles = new JButton("All Vehicles");
+		btnAllVehicles.addActionListener(new ActionListener(){
+					@Override
+					public void actionPerformed(ActionEvent e)
+					{
+						String report = "";
+						if(!project.getSedanList().isEmpty())
+						{
+							Iterator<Sedan> sedanIT = project.getSedanList().iterator();
+							while(sedanIT.hasNext())
+							{report += sedanIT.next().toString()+";\n";}
+							report += "\n\n";
+						}
+						else
+						{report += "--No Sedans to include in this report--\n\n";}
+						
+						
+						if(!project.getTruckList().isEmpty())
+						{
+							Iterator<Truck> truckIT = project.getTruckList().iterator();
+							while(truckIT.hasNext())
+							{report += truckIT.next().toString()+";\n";}
+							report += "\n\n";
+						}
+						else{report += "--No Trucks to include in this report--\n\n";}
+						
+						if(!project.getVanList().isEmpty())
+						{
+							Iterator<Van> vanIT = project.getVanList().iterator();
+							while(vanIT.hasNext())
+							{report += vanIT.next().toString()+";\n";}
+						}
+						else{report += "--No Vans to include in this report--";}
+						
+						JFrame fr = getFrame(e);
+						JOptionPane.showMessageDialog(fr, report);
+					}
+			
+				});
 		JLabel lblReports = new JLabel("Reports");
+		lblReports.setFont(new Font("Dialog", Font.BOLD, 20));
+		
+		JButton btnAllCustomers = new JButton("All Customers");
+		btnAllCustomers.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				String report = "";
+				if(!project.getCustomerList().isEmpty())
+				{
+					Iterator<Customer> clientIT = project.getCustomerList().iterator();
+					while(clientIT.hasNext())
+					{report += clientIT.next().toString()+";\n";}
+					report += "\n\n";
+				}
+				report += "--There are no Customers to include in this report--";
+				JFrame fr = getFrame(e);
+				JOptionPane.showMessageDialog(fr, report);
+			}
+		});
+		
+		JButton btnTypesOfVehicles = new JButton("Types of Vehicles");
+		btnTypesOfVehicles.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				String report="";
+				JFrame fr = getFrame(e);
+				
+				if(!project.getCarList().isEmpty())
+				{
+					String[] opts = { CarTypes.SEDAN.toString(), CarTypes.TRUCK.toString(), CarTypes.VAN.toString() };
+					int ans = JOptionPane.showOptionDialog(fr, "What type of vehicle do you want a report on?",
+							"Specify The Car Type", JOptionPane.QUESTION_MESSAGE, JOptionPane.INFORMATION_MESSAGE, null,
+							opts, opts[0]);
+					switch (ans) {
+					case 0:
+						//get all sedan cars and report on them
+						Iterator<Sedan> sedans = project.getSedanList().iterator();
+						while(sedans.hasNext())
+						{report += sedans.next().toString();}
+						break;
+					case 1:
+						//get all truck cars and report
+						Iterator<Truck> trucks = project.getTruckList().iterator();
+						while(trucks.hasNext())
+						{report += trucks.next().toString();}
+						break;
+					case 2:
+						//get all vans and report
+						Iterator<Van> vans = project.getVanList().iterator();
+						while(vans.hasNext())
+						{report += vans.next().toString();}
+						break;
+					}
+				}
+				else
+				{report+="--There are no cars in the system or they have all been deleted--\nEnding Report!";}
+				JOptionPane.showMessageDialog(fr, report);
+			}
+		});
+		
+		
+		JButton btnUnlinkedVehicles = new JButton("Unlinked Vehicles");
+		btnUnlinkedVehicles.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				String report = "";
+				if(!project.getVehicleNoClient().isEmpty())
+				{
+					Iterator<Vehicle> carsNoClient = project.getVehicleNoClient().iterator();
+					while(carsNoClient.hasNext())
+					{
+						Vehicle car = carsNoClient.next();
+						if(car instanceof Sedan)
+						{report += ((Sedan)carsNoClient.next()).toString()+";\n";}
+						else if(car instanceof Truck)
+						{report += ((Truck)carsNoClient.next()).toString()+";\n";}
+						else if(car instanceof Van)
+						{report += ((Van)carsNoClient.next()).toString()+";\n";}
+					}
+				}
+				else if(project.getVehicleNoClient().isEmpty() && project.getCarList().isEmpty())
+				{report += "--No vehicles are in the system or are all deleted--";}
+				else
+				{report += "--All currently existing vehicles have customers associated to them--";}
+				JFrame fr = getFrame(e);
+				JOptionPane.showMessageDialog(fr, report);
+			}
+		});
+		
+		JButton btnUnlinkedCustomers = new JButton("Unlinked Customers");
+		btnUnlinkedCustomers.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				String report = "";
+				if(!project.getCustomersWithNoCars().isEmpty())
+				{
+					Iterator<Customer> clientNoCarIT = project.getCustomersWithNoCars().iterator();
+					while(clientNoCarIT.hasNext())
+					{report += clientNoCarIT.next().toString()+";\n";}
+				}
+				else if(project.getCustomersWithNoCars().isEmpty() && project.getCustomerList().isEmpty())
+				{report += "--No customers are in the system or are all deleted--";}
+				else
+				{report += "--All currently existing customers have cars associated to them--";}
+				JFrame fr = getFrame(e);
+				JOptionPane.showMessageDialog(fr, report);
+			}
+		});
+		
 		
 		//make the Master Panel GroupLayout----------------------------------------------------
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
@@ -134,8 +294,19 @@ public class vmsproGUI extends JFrame
 					.addGap(43))
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(75)
-					.addComponent(lblReports)
-					.addContainerGap(855, Short.MAX_VALUE))
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblReports)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(btnAllVehicles)
+							.addGap(18)
+							.addComponent(btnAllCustomers)
+							.addGap(18)
+							.addComponent(btnTypesOfVehicles)
+							.addGap(18)
+							.addComponent(btnUnlinkedVehicles)
+							.addGap(18)
+							.addComponent(btnUnlinkedCustomers)))
+					.addContainerGap(175, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -144,9 +315,16 @@ public class vmsproGUI extends JFrame
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(clientPanel, GroupLayout.PREFERRED_SIZE, 236, GroupLayout.PREFERRED_SIZE)
 						.addComponent(carPanel, GroupLayout.PREFERRED_SIZE, 236, GroupLayout.PREFERRED_SIZE))
-					.addGap(105)
+					.addGap(109)
 					.addComponent(lblReports)
-					.addContainerGap(216, Short.MAX_VALUE))
+					.addGap(28)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnAllVehicles)
+						.addComponent(btnAllCustomers)
+						.addComponent(btnTypesOfVehicles)
+						.addComponent(btnUnlinkedVehicles)
+						.addComponent(btnUnlinkedCustomers))
+					.addContainerGap(150, Short.MAX_VALUE))
 		);
 		//end-----------------------------------------------------------------------------------
 		
@@ -157,8 +335,7 @@ public class vmsproGUI extends JFrame
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				Component comp = (Component)e.getSource();
-				JFrame fr = (JFrame)SwingUtilities.getRoot(comp);
+				JFrame fr = getFrame(e);
 				DialManageVehicles mngCars = new DialManageVehicles(fr,project);
 				mngCars.setVisible(true);
 			}
@@ -220,5 +397,15 @@ public class vmsproGUI extends JFrame
 			{System.exit(0);}
 		});
 		mnFile.add(mntmExit);
+	}
+	
+	/**
+	 * Returns the frame found using SwingUtilities based on some ActionEvent e
+	 * */
+	public static JFrame getFrame(ActionEvent e)
+	{
+		Component comp = (Component)e.getSource();
+		JFrame fr = (JFrame)SwingUtilities.getRoot(comp);
+		return fr;
 	}
 }

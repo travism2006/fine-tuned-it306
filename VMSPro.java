@@ -1,11 +1,9 @@
 package vmspro;
 
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Set;
 import java.util.Stack;
 
 import vmspro.VMSPro_Constants.CarColors;
@@ -49,6 +47,7 @@ public final class VMSPro
 	public boolean addCustomer(Customer someCust)
 	{
 		if(someCust == null)return false;
+		else if(this.getCustomerList().contains(someCust))return false;
 		return this.listCust.add(someCust); 
 	}
 	
@@ -60,6 +59,7 @@ public final class VMSPro
 	public boolean addCar(Vehicle someCar)
 	{
 		if(someCar == null)return false;
+		else if(this.getVINList().contains(someCar.getVin()))return false;
 		return this.listCars.add(someCar);
 	}
 	
@@ -501,14 +501,14 @@ public final class VMSPro
 	}
 	
 	/**
-	 * Returns a <code>Set</code> of the currently existing cars' VIN field
+	 * Returns a <code>List</code> of the currently existing cars' VIN field
 	 * within the VMS Pro appication.<br>
 	 * <i>Note: a set of VINs is possible since no two vins can be identical</i>
-	 * @return <code>Set</code> of all curent vehicle VINs
+	 * @return <code>List</code> of all curent vehicle VINs
 	 * */
-	public Set<String> getVINSet()
+	public List<String> getVINList()
 	{
-		Set<String> vins = new HashSet<String>();
+		List<String> vins = new LinkedList<String>();
 		for (int i = 0; i < this.listCars.size(); i++)
 		{vins.add(listCars.get(i).getVin());}
 		return vins;
@@ -587,20 +587,20 @@ public final class VMSPro
 		List<Van> vans = new LinkedList<Van>();
 		for (int i = 0; i < this.listCars.size(); i++)
 		{
-			if(listCars.get(i) instanceof Truck)
+			if(listCars.get(i) instanceof Van)
 			{vans.add((Van) listCars.get(i));}
 		}
 		return vans;
 	}
 	
 	/**
-	 * Returns a <code>Set</code> of the currently existing customers' ID field
+	 * Returns a <code>List</code> of the currently existing customers' ID field
 	 * within the VMS Pro appication.
-	 * @return <code>Set</code> of all curent customer IDs
+	 * @return <code>List</code> of all curent customer IDs
 	 * */
-	public Set<Integer> getCustomerIDSet()
+	public List<Integer> getCustomerIDSet()
 	{
-		Set<Integer> ids = new HashSet<Integer>();
+		List<Integer> ids = new LinkedList<Integer>();
 		for (int i = 0; i < this.listCust.size(); i++)
 		{ids.add(listCust.get(i).getCustomerId());}
 		return ids;
