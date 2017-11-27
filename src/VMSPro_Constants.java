@@ -14,8 +14,10 @@ public interface VMSPro_Constants
 	int pixelColWidth = 17;
 	int TxtAreaHeight = 20;
 	int TxtAreaWidth = 13;
-	String TxtCarHeader = "Lot ID\tVIN\tMake\tModel\tYear\tColor\tType\tCustomer ID";
+	String TxtCarFullHeader = "Lot ID\tVIN\tMake\tModel\tYear\tColor\tType\tCustomer ID";
+	String TxtSomeCarHeader = "VIN\tMake\tModel";
 	String TxtCustomerHeader = "ID Number\tFirst Name\tLast Name\tNumber of Cars\tAddress";
+	String TxtSomeCustomerHeader = "ID Number\tFirst Name\tLast Name";
 	
 	/*Required from Phase 1 and beyond*/
 	int VIN_LENGTH = 17;

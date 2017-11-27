@@ -3,11 +3,13 @@ package vmspro;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.Stack;
 
 import vmspro.VMSPro_Constants.CarColors;
+import vmspro.VMSPro_Constants.CarTypes;
 
 /**
  * For VMS Pro, Java's Swing and AWT features are used.
@@ -466,7 +468,7 @@ public final class VMSPro
 	 * Return a sublist of customers that have no associated vehicle object.
 	 * @return the sublist of customers without linked cars
 	 * */
-	public LinkedList<Customer> getCustomersNoCars()
+	public LinkedList<Customer> getCustomersWithNoCars()
 	{
 		LinkedList<Customer> custNoCars = new LinkedList<>();
 		Iterator<Customer> custIT = this.listCust.iterator();
@@ -492,26 +494,106 @@ public final class VMSPro
 			Vehicle car = carIT.next();
 			if(car.getCustomer()==null)
 			{carNoClientList.add(car);}
+			else if(car.getCustomer().equals(null))
+			{carNoClientList.add(car);}
 		}
 		return carNoClientList;
 	}
 	
 	/**
-	 * public Set getVINSet()
 	 * Returns a <code>Set</code> of the currently existing cars' VIN field
-	 * within the VMS Pro appication.
+	 * within the VMS Pro appication.<br>
+	 * <i>Note: a set of VINs is possible since no two vins can be identical</i>
 	 * @return <code>Set</code> of all curent vehicle VINs
 	 * */
 	public Set<String> getVINSet()
 	{
 		Set<String> vins = new HashSet<String>();
-		for (int i = 0; i < vins.size(); i++)
+		for (int i = 0; i < this.listCars.size(); i++)
 		{vins.add(listCars.get(i).getVin());}
 		return vins;
 	}
 	
 	/**
-	 * public Set getCustomerIDSet()<br>
+	 * Returns a <code>List</code> of the currently existing cars' <i>make</i>
+	 * field within the VMS Pro appication.<br>
+	 * <i>The use of <code>Set</code> is not used due to lack of support for
+	 * each vehicle instance that has a specific make value since it is
+	 * possible for one 'make' value to be seen several times across
+	 * different vehicle instances.</i>
+	 * @return <code>List</code> of all curent vehicle make(s)
+	 * */
+	public List<String> getListMakes()
+	{
+		List<String> makes = new LinkedList<String>();
+		for (int i = 0; i < this.listCars.size(); i++)
+		{makes.add(listCars.get(i).getMake());}
+		return makes;
+	}
+	
+	/**
+	 * Returns a <code>List</code> of the currently existing cars' <i>model</i>
+	 * field within the VMS Pro appication.<br>
+	 * <i>The use of <code>Set</code> is not used due to lack of support for
+	 * each vehicle instance that has a specific make value since it is
+	 * possible for one 'make' value to be seen several times across
+	 * different vehicle instances.</i>
+	 * @return <code>List</code> of all curent vehicle model(s)
+	 * */
+	public List<String> getModelList()
+	{
+		List<String> models = new LinkedList<String>();
+		for (int i = 0; i < this.listCars.size(); i++)
+		{models.add(listCars.get(i).getModel());}
+		return models;
+	}
+	
+	/**
+	 * Returns a <code>List</code> of cars that are instances of Sedan car type.
+	 * @return <code>List</code> of all curent vehicles that are Sedans
+	 * */
+	public List<Sedan> getSedanList()
+	{
+		List<Sedan> sedans = new LinkedList<Sedan>();
+		for (int i = 0; i < this.listCars.size(); i++)
+		{
+			if(listCars.get(i) instanceof Sedan)
+			{sedans.add((Sedan) listCars.get(i));}
+		}
+		return sedans;
+	}
+	
+	/**
+	 * Returns a <code>List</code> of cars that are instances of Truck car type.
+	 * @return <code>List</code> of all curent vehicles that are Trucks
+	 * */
+	public List<Truck> getTruckList()
+	{
+		List<Truck> trucks = new LinkedList<Truck>();
+		for (int i = 0; i < this.listCars.size(); i++)
+		{
+			if(listCars.get(i) instanceof Truck)
+			{trucks.add((Truck) listCars.get(i));}
+		}
+		return trucks;
+	}
+	
+	/**
+	 * Returns a <code>List</code> of cars that are instances of Van car type.
+	 * @return <code>List</code> of all curent vehicles that are Vans
+	 * */
+	public List<Van> getVanList()
+	{
+		List<Van> vans = new LinkedList<Van>();
+		for (int i = 0; i < this.listCars.size(); i++)
+		{
+			if(listCars.get(i) instanceof Truck)
+			{vans.add((Van) listCars.get(i));}
+		}
+		return vans;
+	}
+	
+	/**
 	 * Returns a <code>Set</code> of the currently existing customers' ID field
 	 * within the VMS Pro appication.
 	 * @return <code>Set</code> of all curent customer IDs
@@ -519,10 +601,79 @@ public final class VMSPro
 	public Set<Integer> getCustomerIDSet()
 	{
 		Set<Integer> ids = new HashSet<Integer>();
-		for (int i = 0; i < ids.size(); i++)
+		for (int i = 0; i < this.listCust.size(); i++)
 		{ids.add(listCust.get(i).getCustomerId());}
 		return ids;
 	}
+	
+	/**
+	 * Returns a <code>List</code> of the currently existing customers' first
+	 * name within the VMS Pro appication.
+	 * @return <code>List</code> of all curent customer first names
+	 * */
+	public List<String> getFirstNameList()
+	{
+		List<String> fnamelist= new LinkedList<String>();
+		for (int i = 0; i < this.listCust.size(); i++)
+		{fnamelist.add(listCust.get(i).getFirstName());}
+		return fnamelist;
+	}
+	
+	/**
+	 * Returns a <code>List</code> of the currently existing customers' last
+	 * name within the VMS Pro appication.
+	 * @return <code>List</code> of all curent customer last names
+	 * */
+	public List<String> getLastNameList()
+	{
+		List<String> lnameList= new LinkedList<String>();
+		for (int i = 0; i < this.listCust.size(); i++)
+		{lnameList.add(listCust.get(i).getLastName());}
+		return lnameList;
+	}
+	
+	/**
+	 * Return a report given the type of vehicle of interest.
+	 * @param typeX the type of vehicle to report on
+	 * @return the string report on the type of vehicle
+	 * */
+	public String reportCarType(CarTypes typeX)
+	{
+		String out = "";
+		switch(typeX)
+		{
+			case SEDAN:
+				List<Sedan> sedans = this.getSedanList();
+				Iterator<Sedan> itSedan = sedans.iterator();
+				out = "";
+				
+				while(itSedan.hasNext())
+				{out+=itSedan.next().toString()+"\n";}
+				
+				return out;
+			case TRUCK:
+				List<Truck> trucks = this.getTruckList();
+				Iterator<Truck> itTruck = trucks.iterator();
+				out = "";
+				
+				while(itTruck.hasNext())
+				{out+=itTruck.next().toString()+"\n";}
+				
+				return out;
+			case VAN:
+				List<Van> vans = this.getVanList();
+				Iterator<Van> itVan = vans.iterator();
+				out = "";
+				
+				while(itVan.hasNext())
+				{out+=itVan.next().toString()+"\n";}
+				
+				return out;
+			default:
+				return "";
+		}
+	}
+	
 	
 	//basic search options
 	/**
