@@ -29,6 +29,7 @@ public class Vehicle implements VMSPro_Standard_Behavior
 	{
 		carTotal++;
 		this.lotNumber = carTotal;
+		this.cust = new HashMap<>();
 	}
 	
 	/**
@@ -124,19 +125,31 @@ public class Vehicle implements VMSPro_Standard_Behavior
 	}
 	
 	/**
-	 * Nonvalidating method for associating a single customer to this
+	 * Validating method for associating a single customer to this
 	 * car.  Does not allow null pointers to a customer object.
 	 * @param someCust the customer to be linked to
 	 * */
 	public void linkCustomer(Customer someCust)
-	{this.cust.put(someCust.getCustomerId(), someCust);}
+	{
+		if(someCust != null)
+		{this.cust.put(someCust.getCustomerId(), someCust);}
+		
+	}
 	
 	/**
 	 * Returns the customer linked to this vehicle.
 	 * @return the customer linked to this vehicle
 	 * */
 	public Customer getCustomer()
-	{return (Customer) cust.values().toArray()[0];}
+	{
+		if(this.cust.isEmpty())return null;
+		else if(this.cust.values().contains(null))return null;
+		
+		Object client = cust.values().toArray()[0];
+		if(client == null)return null;
+		else if(client.equals(null))return null;
+		return (Customer)client;
+	}
 	
 	/**
 	 * Returns the lot # of this car.
