@@ -21,7 +21,7 @@ public class Customer implements VMSPro_Standard_Behavior
 	/**
 	 * Default constructor for id generation and initialization.
 	 */
-	public Customer()
+	private Customer()
 	{
 		counter++;
 		this.custID = counter;

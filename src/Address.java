@@ -102,7 +102,7 @@ public final class Address
 	 * */
 	public String toString()
 	{
-		String out = String.format("Street Address: %s\nCity: %s\nState: %s\nZipcode: %d\n\n",
+		String out = String.format("Street Address: %s, City: %s, State: %s, Zipcode: %d",
 				  this.streetAddress, this.city, this.state,this.zipCode);
 		return out;
 	}

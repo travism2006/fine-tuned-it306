@@ -7,17 +7,19 @@ package vmspro;
 public interface VMSPro_Constants
 {
 	/*Useful for file consistency across the application.*/
-	String CarFileName = "vehicleData.txt";
-	String CustomerFileName = "customerData.txt";
+	String VehicleFile = "/phase4/Vehicle_VMSPro_Data.txt";
+	String ClientFile = "/phase4/Client_VMSPro_Data.txt";
 	
 	/*Needed for the JTxtFields in the GUIs and form inputs*/
 	int pixelColWidth = 17;
 	int TxtAreaHeight = 20;
 	int TxtAreaWidth = 13;
-	String TxtCarFullHeader = "Lot ID\tVIN\tMake\tModel\tYear\tColor\tType\tCustomer ID";
-	String TxtSomeCarHeader = "VIN\tMake\tModel";
+	String TxtCarFullHeader = "Lot ID\tVIN\t\tMake\tModel\tYear\tColor\tType\tCustomer ID";
 	String TxtCustomerHeader = "ID Number\tFirst Name\tLast Name\tNumber of Cars\tAddress";
-	String TxtSomeCustomerHeader = "ID Number\tFirst Name\tLast Name";
+	
+	String HasNoClient = "\n%d\t%s\t%s\t%s\t%d\t%s\t%s\tN\\A";
+	String HasClient = "\n%d\t%s\t%s\t%s\t%d\t%s\t%s\t%d";
+	String HasCar = "%d\t%s\t%s\t%d\t%s";
 	
 	/*Required from Phase 1 and beyond*/
 	int VIN_LENGTH = 17;
@@ -35,12 +37,12 @@ public interface VMSPro_Constants
 	}
 	public enum CarColors
 	{
-		RED, BLACK, WHITE, BLUE, GREEN, YELLOW, CYAN,ORANGE,GRAY
+		RED, BLACK, WHITE, BLUE
 	}
 
 	/*Options for sorting lists of cars and customers*/
 	public enum SortOptions
-	{INSERT, MERGE, QUICK,SELECT}
+	{INSERT, MERGE, QUICK}
 	
 	/*Search options for searching customers or cars*/
 	public enum SearchOptions
