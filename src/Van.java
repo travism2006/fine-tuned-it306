@@ -70,8 +70,6 @@ public final class Van extends Vehicle
 	 * */
 	public String toString()
 	{
-		String out = super.toString();
-		out += String.format(", Cargo Space: %d", this.cargoSpace);
-		return out;
+		return "Van [cargoSpace=" + cargoSpace + "]";
 	}
 }

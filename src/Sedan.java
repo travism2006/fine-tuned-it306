@@ -62,8 +62,6 @@ public final class Sedan extends Vehicle
 	 * */
 	public String toString()
 	{
-		String out = super.toString();
-		out += String.format(", Convertible: %b", this.isConvertible);
-		return out;
+		return "Sedan [convertible=" + isConvertible + "]";
 	}
 }

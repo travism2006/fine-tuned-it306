@@ -113,11 +113,20 @@ public final class VMSPro
 		
 		if(listCars.remove(someCar))
 		{
-			Customer custX = someCar.getCustomer();
-			custX.removeCar(someCar);
-			someCar.linkCustomer(null);
-			deletedCars.push(someCar);
-			return true;
+			if(someCar.getCustomer() != null)
+			{
+				Customer custX = someCar.getCustomer();
+				custX.removeCar(someCar);
+				someCar.linkCustomer(null);
+				deletedCars.push(someCar);
+				return true;
+			}
+			else
+			{
+				someCar.linkCustomer(null);
+				deletedCars.push(someCar);
+				return true;
+			}
 		}
 		return false;
 	}
@@ -766,6 +775,12 @@ public final class VMSPro
 		{return false;}
 		else if(someStr.equals(null))
 		{return false;}
+		
+		for(int i = 0; i< someStr.length(); i++)
+		{
+			if(!Character.isLetterOrDigit(someStr.charAt(i)))
+			{return false;}
+		}
 		return true;
 	}
 	
@@ -779,7 +794,7 @@ public final class VMSPro
 	{
 		if(!checkString(someStr))return false;
 		else if(someStr.length() != VMSPro_Constants.VIN_LENGTH)
-			{return false;}
+		{return false;}
 		return true;
 	}
 	

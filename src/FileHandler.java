@@ -31,35 +31,29 @@ public final class FileHandler
 	public static boolean writeToCustomerFile(List<Customer> customerList)
 	{
 		BufferedWriter bufferedWriter = null;
-		try
-		{
-			File clientfile = new File(VMSPro_Constants.ClientFile);
-			if (!clientfile.exists())
-			{
-				try
-				{clientfile.createNewFile();}
-				catch(IOException e)
-				{return false;}
-			}
-
-			Writer writer = new FileWriter(clientfile);
+		try {
+			File myFile = new File("Client_VMSPro_Data.txt");
+			myFile.createNewFile();
+			Writer writer = new FileWriter(myFile);
 			bufferedWriter = new BufferedWriter(writer);
 
-			for (Customer cust : customerList)
-			{
+			for (Customer cust : customerList) {
+
 				Gson g = new Gson();
 				String x = g.toJson(cust);
 				bufferedWriter.write(x);
 				bufferedWriter.newLine();
 			}
-		}
-		catch(IOException e)
-		{e.printStackTrace();}
-		finally
-		{
-			try
-			{if(bufferedWriter != null)bufferedWriter.close();return true;}
-			catch(IOException ex){}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (bufferedWriter != null)
+					bufferedWriter.close();
+			} catch (Exception ex) {
+
+			}
 		}
 		return true;
 	}
@@ -76,20 +70,21 @@ public final class FileHandler
 		DataInputStream dis = null;
 		List<Customer> returnCustomerList = new LinkedList<>();
 		try {
-			is = new FileInputStream("/phase4/Client_VMSPro_Data.txt");
+			is = new FileInputStream("Client_VMSPro_Data.txt");
 			bis = new BufferedInputStream(is);
 			dis = new DataInputStream(bis);
 			String temp = null;
-			while ((temp = dis.readLine()) != null)
-			{
+			while ((temp = dis.readLine()) != null) {
+
 				Gson g = new Gson();
 				Customer c = g.fromJson(temp, Customer.class);
 				returnCustomerList.add(c);
 			}
-		} catch (FileNotFoundException e)
-		{return null;}catch(IOException e){return null;}
-		finally
-		{try{dis.close();}catch(IOException e){e.printStackTrace();}}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return returnCustomerList;
 	}
 	
@@ -104,16 +99,9 @@ public final class FileHandler
 
 		BufferedWriter bufferedWriter = null;
 		try {
-			File myFile = new File(VMSPro_Constants.VehicleFile);
-			if(!myFile.exists())
-			{
-				try
-				{myFile.createNewFile();}
-				catch(IOException e)
-				{return false;}
-			}
-
-			Writer writer = new FileWriter(myFile);
+			File myFile2 = new File("Vehicle_VMSPro_Data.txt");
+			myFile2.createNewFile();
+			Writer writer = new FileWriter(myFile2);
 			bufferedWriter = new BufferedWriter(writer);
 
 			for (Vehicle car : vehicleList)
@@ -144,38 +132,44 @@ public final class FileHandler
 	@SuppressWarnings("deprecation")
 	public static List<Vehicle> readVehicleToObject()
 	{
+		String carFile = "Vehicle_VMSPro_Data.txt";
 		InputStream is = null;
 		BufferedInputStream bis = null;
 		DataInputStream dis = null;
 		List<Vehicle> returnListVehicle = new LinkedList<>();
-		try
-		{
-			is = new FileInputStream(VMSPro_Constants.VehicleFile);
-			bis = new BufferedInputStream(is);
-			dis = new DataInputStream(bis);
-			String temp = null;
-			while ((temp = dis.readLine()) != null)
+		boolean fnot = true;
+		do {
+			try {
+				is = new FileInputStream(carFile);
+				bis = new BufferedInputStream(is);
+				dis = new DataInputStream(bis);
+				String temp = null;
+				while ((temp = dis.readLine()) != null) {
+					Gson g = new Gson();
+					if (temp.contains("isConvertible")) {
+						Sedan s = g.fromJson(temp, Sedan.class);
+						returnListVehicle.add(s);
+					}
+					if (temp.contains("cargoSpace")) {
+						Van t = g.fromJson(temp, Van.class);
+						returnListVehicle.add(t);
+					}
+					if (temp.contains("towCapacity")) {
+						Truck t = g.fromJson(temp, Truck.class);
+						returnListVehicle.add(t);
+					}
+				}
+			} catch (FileNotFoundException e)
 			{
-				Gson g = new Gson();
-				if (temp.contains("isConvertible")) {
-					Sedan s = g.fromJson(temp, Sedan.class);
-					returnListVehicle.add(s);
-				}
-				if (temp.contains("cargoSpace")) {
-					Van t = g.fromJson(temp, Van.class);
-					returnListVehicle.add(t);
-				}
-				if (temp.contains("towCapacity")) {
-					Truck t = g.fromJson(temp, Truck.class);
-					returnListVehicle.add(t);
-				}
-			}
-		} catch (FileNotFoundException e)
-		{
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+				File f = new File(carFile);
+				try
+				{f.createNewFile();fnot = false;}
+				catch(IOException e1)
+				{e1.printStackTrace();}
+			} catch (IOException e) {
+				e.printStackTrace();
+			} 
+		} while (fnot);
 		return returnListVehicle;
 }
 }

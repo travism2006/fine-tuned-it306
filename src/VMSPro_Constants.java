@@ -6,10 +6,6 @@ package vmspro;
  * */
 public interface VMSPro_Constants
 {
-	/*Useful for file consistency across the application.*/
-	String VehicleFile = "/phase4/Vehicle_VMSPro_Data.txt";
-	String ClientFile = "/phase4/Client_VMSPro_Data.txt";
-	
 	/*Needed for the JTxtFields in the GUIs and form inputs*/
 	int pixelColWidth = 17;
 	int TxtAreaHeight = 20;

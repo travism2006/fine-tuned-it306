@@ -94,8 +94,6 @@ public final class Truck extends Vehicle
 	 * */
 	public String toString()
 	{
-		String out = super.toString();
-		out += String.format(", Carrying Capacity: %d, Towing Capacity: %d", this.carryCapacity, this.towCapacity);
-		return out;
+		return "Truck [towing capacity=" + towCapacity + ", carrying capacity=" +carryCapacity+ "]";
 	}
 }

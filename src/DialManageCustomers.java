@@ -121,12 +121,15 @@ public class DialManageCustomers extends JDialog
 					addClientPanel.add(carVinInput);
 				}
 				
+				String[] opts = {""};
+				JOptionPane.showOptionDialog(null, "", "title",
+						JOptionPane.OK_CANCEL_OPTION,
+						JOptionPane.INFORMATION_MESSAGE, null, opts, opts[0]);
+				
 				addClientPanel.setVisible(true);
 				return addClientPanel;
 			}
 		});
-		
-		editClientBttn = new JButton("Edit");
 		
 		sortClientsBttn = new JButton("Sort");
 		
@@ -194,7 +197,6 @@ public class DialManageCustomers extends JDialog
 		totalCustomerArea.setEditable(false);
 		contentPane.add(totalCustomerArea);
 		contentPane.add(addClientBttn);
-		contentPane.add(editClientBttn);
 		contentPane.add(sortClientsBttn);
 		contentPane.add(remvClientBttn);
 		contentPane.add(cancelBttn);
@@ -222,7 +224,11 @@ public class DialManageCustomers extends JDialog
 			if (create == JOptionPane.OK_OPTION)
 			{
 				boolean goodFName = VMSPro.checkString(fnameInput.getText());
-				boolean goodLName;
+				boolean goodLName = VMSPro.checkString(lnameInput.getText());
+				
+				
+				
+				
 				
 			} 
 		}while(create != JOptionPane.CANCEL_OPTION);
