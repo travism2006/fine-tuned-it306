@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import javax.swing.GroupLayout;
@@ -387,7 +389,15 @@ public class vmsproGUI extends JFrame
 			public void actionPerformed(ActionEvent e)
 			{
 				//TODO: read from File "vmsData.txt"
-				File f = new File(VMSPro_Constants.ProjectFile);
+				List<Customer> clientList = FileHandler.readToCustomerObject();
+				if(clientList == null)
+				{JOptionPane.showMessageDialog(vmsproGUI.getFrame(e),
+						"Empty client file or file not found.");}
+				
+				List<Vehicle> carList = FileHandler.readVehicleToObject();
+				if(carList == null)
+				{JOptionPane.showMessageDialog(vmsproGUI.getFrame(e),
+						"Empty vehicle file or file not found.");}
 			}
 		});
 		
@@ -400,8 +410,11 @@ public class vmsproGUI extends JFrame
 			public void actionPerformed(ActionEvent e)
 			{
 				//write all changes to file
-				
-				
+				if(FileHandler.writeToCustomerFile(project.getCustomerList()))
+				{JOptionPane.showMessageDialog(vmsproGUI.getFrame(e),
+						"All customer data has been saved to file.");}
+				else
+				{JOptionPane.showMessageDialog(vmsproGUI.getFrame(e), "No customer data was saved to file.");}
 				System.exit(0);
 			}
 		});
