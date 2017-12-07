@@ -1,4 +1,4 @@
-package vmspro;
+package vmspro; 
 
 /**
  * Primarily used for reducing 'magic numbers and values' across the code base.
