@@ -2,7 +2,7 @@
 The following is the development of a course project for the fall 2017 term.  In this project, the developers used Java to make "VMS Pro" a desktop application for managing customers and vehicles for a dealership.
 
 ## Current Version
-VMS Pro version 1.0.b.3
+VMS Pro version 1.0.c.2
 
 ## Authors
 Hassan A.,
