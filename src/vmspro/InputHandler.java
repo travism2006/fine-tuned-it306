@@ -24,132 +24,132 @@ import com.google.gson.Gson;
 
 public class InputHandler {
 
-    public static boolean writeCustomerToFile(List<Customer> customerList) {
+  public static boolean writeCustomerToFile(List<Customer> customerList) {
 
-        BufferedWriter bufferedWriter = null;
-        try {
-            File myFile = new File("customer.txt");
-            if (!myFile.exists()) {
-                myFile.createNewFile();
-            }
+    BufferedWriter bufferedWriter = null;
+    try {
+      File myFile = new File("customer.txt");
+      if (!myFile.exists()) {
+        myFile.createNewFile();
+      }
 
-            Writer writer = new FileWriter(myFile);
-            bufferedWriter = new BufferedWriter(writer);
+      Writer writer = new FileWriter(myFile);
+      bufferedWriter = new BufferedWriter(writer);
 
-            for (Customer cust : customerList) {
+      for (Customer cust : customerList) {
 
-                Gson g = new Gson();
-                String x = g.toJson(cust);
-                bufferedWriter.write(x);
-                bufferedWriter.newLine();
-            }
+        Gson g = new Gson();
+        String x = g.toJson(cust);
+        bufferedWriter.write(x);
+        bufferedWriter.newLine();
+      }
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (bufferedWriter != null)
-                    bufferedWriter.close();
-            } catch (Exception ex) {
+    } catch (IOException e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        if (bufferedWriter != null)
+          bufferedWriter.close();
+      } catch (Exception ex) {
 
-            }
-        }
-
-        return true;
+      }
     }
 
-    @SuppressWarnings("deprecation")
-    public static List<Customer> readCustomerToObject() {
-        InputStream is = null;
-        BufferedInputStream bis = null;
-        DataInputStream dis = null;
-        List<Customer> returnCustomerList = new LinkedList<>();
-        try {
-            is = new FileInputStream("customer.txt");
-            bis = new BufferedInputStream(is);
-            dis = new DataInputStream(bis);
-            String temp = null;
-            while ((temp = dis.readLine()) != null) {
+    return true;
+  }
 
-                Gson g = new Gson();
-                Customer c = g.fromJson(temp, Customer.class);
-                returnCustomerList.add(c);
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+  @SuppressWarnings("deprecation")
+  public static List<Customer> readCustomerToObject() {
+    InputStream is = null;
+    BufferedInputStream bis = null;
+    DataInputStream dis = null;
+    List<Customer> returnCustomerList = new LinkedList<>();
+    try {
+      is = new FileInputStream("customer.txt");
+      bis = new BufferedInputStream(is);
+      dis = new DataInputStream(bis);
+      String temp = null;
+      while ((temp = dis.readLine()) != null) {
 
-        return returnCustomerList;
+        Gson g = new Gson();
+        Customer c = g.fromJson(temp, Customer.class);
+        returnCustomerList.add(c);
+      }
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
     }
 
-    public static boolean writeVehicleToFile(List<Vehicle> vehicleList) {
+    return returnCustomerList;
+  }
 
-        BufferedWriter bufferedWriter = null;
-        try {
-            File myFile = new File("vehicle.txt");
-            if (!myFile.exists()) {
-                myFile.createNewFile();
-            }
+  public static boolean writeVehicleToFile(List<Vehicle> vehicleList) {
 
-            Writer writer = new FileWriter(myFile);
-            bufferedWriter = new BufferedWriter(writer);
+    BufferedWriter bufferedWriter = null;
+    try {
+      File myFile = new File("vehicle.txt");
+      if (!myFile.exists()) {
+        myFile.createNewFile();
+      }
 
-            for (Vehicle veh : vehicleList) {
+      Writer writer = new FileWriter(myFile);
+      bufferedWriter = new BufferedWriter(writer);
 
-                Gson g = new Gson();
-                String x = g.toJson(veh);
-                bufferedWriter.write(x);
-                bufferedWriter.newLine();
-            }
+      for (Vehicle veh : vehicleList) {
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (bufferedWriter != null)
-                    bufferedWriter.close();
-            } catch (Exception ex) {
+        Gson g = new Gson();
+        String x = g.toJson(veh);
+        bufferedWriter.write(x);
+        bufferedWriter.newLine();
+      }
 
-            }
-        }
+    } catch (IOException e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        if (bufferedWriter != null)
+          bufferedWriter.close();
+      } catch (Exception ex) {
 
-        return true;
+      }
     }
 
-    @SuppressWarnings("deprecation")
-    public static List<Vehicle> readVehicleToObject() {
-        InputStream is = null;
-        BufferedInputStream bis = null;
-        DataInputStream dis = null;
-        List<Vehicle> returnListVehicle = new LinkedList<>();
-        try {
-            is = new FileInputStream("vehicle.txt");
-            bis = new BufferedInputStream(is);
-            dis = new DataInputStream(bis);
-            String temp = null;
-            while ((temp = dis.readLine()) != null) {
-                Gson g = new Gson();
-                if (temp.contains("isConvertible")) {
-                    Sedan s = g.fromJson(temp, Sedan.class);
-                    returnListVehicle.add(s);
-                }
-                if (temp.contains("cargoSpace")) {
-                    Van t = g.fromJson(temp, Van.class);
-                    returnListVehicle.add(t);
-                }
-                if (temp.contains("towCapacity")) {
-                    Van t = g.fromJson(temp, Van.class);
-                    returnListVehicle.add(t);
-                }
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    return true;
+  }
 
-        return returnListVehicle;
+  @SuppressWarnings("deprecation")
+  public static List<Vehicle> readVehicleToObject() {
+    InputStream is = null;
+    BufferedInputStream bis = null;
+    DataInputStream dis = null;
+    List<Vehicle> returnListVehicle = new LinkedList<>();
+    try {
+      is = new FileInputStream("vehicle.txt");
+      bis = new BufferedInputStream(is);
+      dis = new DataInputStream(bis);
+      String temp = null;
+      while ((temp = dis.readLine()) != null) {
+        Gson g = new Gson();
+        if (temp.contains("isConvertible")) {
+          Sedan s = g.fromJson(temp, Sedan.class);
+          returnListVehicle.add(s);
+        }
+        if (temp.contains("cargoSpace")) {
+          Van t = g.fromJson(temp, Van.class);
+          returnListVehicle.add(t);
+        }
+        if (temp.contains("towCapacity")) {
+          Van t = g.fromJson(temp, Van.class);
+          returnListVehicle.add(t);
+        }
+      }
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
     }
+
+    return returnListVehicle;
+  }
 }

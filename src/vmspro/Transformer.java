@@ -13,85 +13,85 @@ import java.util.List;
  */
 
 public final class Transformer {
-    /**
-     * this method will arrange the customer list in alphabetically by the first
-     * name
-     * 
-     * @param customerList
-     * @return
-     */
-    public static List<Customer> sortCustomersByFistName(List<Customer> customerList) {
+  /**
+   * this method will arrange the customer list in alphabetically by the first
+   * name
+   * 
+   * @param customerList
+   * @return
+   */
+  public static List<Customer> sortCustomersByFistName(List<Customer> customerList) {
 
-        Collections.sort(customerList, Comparator.comparing(Customer::getFirstName));
+    Collections.sort(customerList, Comparator.comparing(Customer::getFirstName));
 
-        return customerList;
-    }
+    return customerList;
+  }
 
-    /**
-     * this method will arrange the customer list in assending order by the
-     * customer id
-     * 
-     * @param customerList
-     * @return
-     */
-    public static List<Customer> sortCustomersById(List<Customer> customerList) {
+  /**
+   * this method will arrange the customer list in assending order by the
+   * customer id
+   * 
+   * @param customerList
+   * @return
+   */
+  public static List<Customer> sortCustomersById(List<Customer> customerList) {
 
-        Collections.sort(customerList, Comparator.comparing(Customer::getCustomerId));
+    Collections.sort(customerList, Comparator.comparing(Customer::getCustomerId));
 
-        return customerList;
-    }
+    return customerList;
+  }
 
-    /**
-     * this method will arrange the customer list in alphabetically by the Last
-     * name
-     * 
-     * @param customerList
-     * @return
-     */
-    public static List<Customer> sortCustomersByLastName(List<Customer> customerList) {
+  /**
+   * this method will arrange the customer list in alphabetically by the Last
+   * name
+   * 
+   * @param customerList
+   * @return
+   */
+  public static List<Customer> sortCustomersByLastName(List<Customer> customerList) {
 
-        Collections.sort(customerList, Comparator.comparing(Customer::getLastName));
+    Collections.sort(customerList, Comparator.comparing(Customer::getLastName));
 
-        return customerList;
-    }
+    return customerList;
+  }
 
-    /**
-     * this method will arrange the vehicle list in by the vin number
-     * 
-     * @param vehicleList
-     * @return
-     */
-    public static List<Vehicle> sortVehicleByVin(List<Vehicle> vehicleList) {
+  /**
+   * this method will arrange the vehicle list in by the vin number
+   * 
+   * @param vehicleList
+   * @return
+   */
+  public static List<Vehicle> sortVehicleByVin(List<Vehicle> vehicleList) {
 
-        Collections.sort(vehicleList, Comparator.comparing(Vehicle::getVin));
+    Collections.sort(vehicleList, Comparator.comparing(Vehicle::getVin));
 
-        return vehicleList;
-    }
+    return vehicleList;
+  }
 
-    /**
-     * this method will arrange the vehicle list in alphabetically by the makers
-     * name
-     * 
-     * @param vehicleList
-     * @return
-     */
-    public static List<Vehicle> sortVehicleByMake(List<Vehicle> vehicleList) {
+  /**
+   * this method will arrange the vehicle list in alphabetically by the makers
+   * name
+   * 
+   * @param vehicleList
+   * @return
+   */
+  public static List<Vehicle> sortVehicleByMake(List<Vehicle> vehicleList) {
 
-        Collections.sort(vehicleList, Comparator.comparing(Vehicle::getMake));
+    Collections.sort(vehicleList, Comparator.comparing(Vehicle::getMake));
 
-        return vehicleList;
-    }
+    return vehicleList;
+  }
 
-    /**
-     * this method will arrange the vehicle list in alphabetically by the model
-     * 
-     * @param vehicleList
-     * @return
-     */
-    public static List<Vehicle> sortVehicleByModel(List<Vehicle> vehicleList) {
+  /**
+   * this method will arrange the vehicle list in alphabetically by the model
+   * 
+   * @param vehicleList
+   * @return
+   */
+  public static List<Vehicle> sortVehicleByModel(List<Vehicle> vehicleList) {
 
-        Collections.sort(vehicleList, Comparator.comparing(Vehicle::getModel));
+    Collections.sort(vehicleList, Comparator.comparing(Vehicle::getModel));
 
-        return vehicleList;
-    }
+    return vehicleList;
+  }
 }

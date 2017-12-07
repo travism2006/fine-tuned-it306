@@ -7,6 +7,7 @@ import vmspro.VMSPro_Constants.CarColors;
  * Specifies the fields related to sedans in the real world- cargo space.
  * @author tmitchu2
  * */
+
 public final class Sedan extends Vehicle
 {
 	private boolean isConvertible;

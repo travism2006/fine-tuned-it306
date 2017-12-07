@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import vmspro.VMSPro_Constants.CarColors;
 
+
 public class VmsProTests
 {
 	/**

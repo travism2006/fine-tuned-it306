@@ -7,6 +7,7 @@ package Phase4;
  * For VMS Pro, Java's Swing and AWT features are used.
  * @author tmitchu2
  * */
+
 public class VMSProApp
 {
 	/**

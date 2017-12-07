@@ -4,6 +4,7 @@ package vmspro;
  * Primarily used for reducing 'magic numbers and values' across the code base.
  * @author tmitchu2
  * */
+
 public interface VMSPro_Constants
 {
 	/*Needed for the JTxtFields in the GUIs and form inputs*/

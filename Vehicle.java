@@ -10,6 +10,7 @@ import vmspro.VMSPro_Constants.CarColors;
  * @author hammar
  * @author tmitchu2
  * */
+
 public class Vehicle implements VMSPro_Standard_Behavior
 {
 	private int lotNumber;

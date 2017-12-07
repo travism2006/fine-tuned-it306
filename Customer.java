@@ -8,6 +8,7 @@ import java.util.HashMap;
  * @author hammar
  * @author tmitchu2
  * */
+
 public class Customer implements VMSPro_Standard_Behavior
 {
 	private static int counter = 0;

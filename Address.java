@@ -5,6 +5,7 @@ package vmspro;
  * @author hammar
  * @author tmitchu2
  * */
+
 public final class Address
 {
 	private String streetAddress;

@@ -23,6 +23,7 @@ import javax.swing.SwingUtilities;
  * as well as details regarding ownerships and empty titles.
  * @author tmitchu2
  * */
+
 public class DialManageCustomers extends JDialog
 {
 	private VMSPro sysApp;

@@ -9,7 +9,6 @@ import java.util.List;
  * this class will have methods for different implementation.
  * @author hassan ammar
  */
-
 public final class Transformer
 {
 	/**

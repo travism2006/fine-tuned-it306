@@ -26,6 +26,7 @@ import vmspro.VMSPro_Constants.CarTypes;
  * about vehicles and their corresponding type.
  * @author tmitchu2
  * */
+
 public class DialManageVehicles extends JDialog
 {
 	private VMSPro sysApp;

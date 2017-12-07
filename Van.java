@@ -7,6 +7,7 @@ import vmspro.VMSPro_Constants.CarColors;
  * Specifies the fields related to vans in the real world, namely cargo space.
  * @author tmitchu2
  * */
+
 public final class Van extends Vehicle
 {
 	private double cargoSpace;

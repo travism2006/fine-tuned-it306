@@ -8,6 +8,7 @@ import vmspro.VMSPro_Constants.CarColors;
  * towing and carrying capacity.
  * @author tmitchu2
  * */
+
 public final class Truck extends Vehicle
 {
 	private double towCapacity;

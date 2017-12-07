@@ -25,6 +25,7 @@ import vmspro.VMSPro_Constants.CarTypes;
 
 import java.awt.Font;
 
+
 /**
  * Gui DDC file for the VMS Pro application.  This is primarily build off of
  * Swing and some AWT-family features which enable the processing of user

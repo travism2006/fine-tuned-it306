@@ -6,10 +6,11 @@ package vmspro;
  * 
  * @author tmitchu2
  */
-public interface VMSPro_Standard_Behavior {
-    @Override
-    public String toString();
 
-    @Override
-    public boolean equals(Object obj);
+public interface VMSPro_Standard_Behavior {
+  @Override
+  public String toString();
+
+  @Override
+  public boolean equals(Object obj);
 }
