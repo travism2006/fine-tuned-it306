@@ -285,6 +285,7 @@ public class Customer implements VMSPro_Standard_Behavior
 	 * */
 	public boolean equals(Customer someCust)
 	{
+		if(someCust == null)return false;
 		if(this.custID == someCust.getCustomerId())return true;
 		return false;
 	}

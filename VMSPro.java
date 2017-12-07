@@ -211,8 +211,9 @@ public final class VMSPro
 		{
 			Vehicle car = listCars.removeFirst();
 			Customer cust = car.getCustomer();
-			cust.removeCar(car);
+			if(cust != null)cust.removeCar(car);
 			//possible redundancy--car.linkCustomer(null);
+			deletedCars.push(car);
 			return true;
 		}catch(NoSuchElementException e)
 		{return false;}
@@ -230,8 +231,9 @@ public final class VMSPro
 		{
 			Vehicle car = listCars.removeLast();
 			Customer cust = car.getCustomer();
-			cust.removeCar(car);
+			if(cust != null)cust.removeCar(car);
 			//possible redundancy--car.linkCustomer(null);
+			deletedCars.push(car);
 			return true;
 		}catch(NoSuchElementException e)
 		{return false;}
