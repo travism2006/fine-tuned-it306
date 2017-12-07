@@ -4,12 +4,9 @@ import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
-
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
@@ -20,7 +17,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EtchedBorder;
@@ -40,7 +36,6 @@ import java.awt.Font;
 public class vmsproGUI extends JFrame
 {
 	private static final long serialVersionUID = 1L;
-	private File vmsFile;
 	private VMSPro project = new VMSPro();
 
 	/**
@@ -171,15 +166,15 @@ public class vmsproGUI extends JFrame
 					{report += clientIT.next().toString()+";\n";}
 					report += "\n\n";
 				}
-				report += "--There are no Customers to include in this report--";
+				else report += "--There are no Customers to include in this report--";
 				JFrame fr = getFrame(e);
 				JOptionPane.showMessageDialog(fr, report);
 			}
 		});
 		
 		JButton btnTypesOfVehicles = new JButton("Types of Vehicles");
-		btnTypesOfVehicles.addActionListener(new ActionListener() {
-			
+		btnTypesOfVehicles.addActionListener(new ActionListener()
+		{
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
@@ -237,9 +232,7 @@ public class vmsproGUI extends JFrame
 							try {
 								report += ((Sedan)carsNoClient.next()).toString()+";\n";
 							} catch (NoSuchElementException e1)
-							{
-								
-							}
+							{}
 						}
 						else if(car instanceof Truck)
 						{report += ((Truck)carsNoClient.next()).toString()+";\n";}
@@ -335,13 +328,6 @@ public class vmsproGUI extends JFrame
 				JFrame fr = getFrame(e);
 				DialManageVehicles mngCars = new DialManageVehicles(fr,project);
 				mngCars.setVisible(true);
-				JTextArea tx = mngCars.getTxtArea();
-				if(tx != null)
-				{
-					//if the manager is closed, then get the updated data from there
-					Vehicle car;
-					
-				}
 			}
 		});
 		
@@ -379,7 +365,9 @@ public class vmsproGUI extends JFrame
 		setJMenuBar(menuBar);
 		
 		JMenu mnFile = new JMenu("File");
-		menuBar.add(mnFile);
+		JMenu editMenu = new JMenu("Edit");
+		
+		menuBar.add(mnFile);menuBar.add(editMenu);
 		
 		//read from file feature
 		JMenu openFileOpts = new JMenu("Open");
@@ -404,17 +392,56 @@ public class vmsproGUI extends JFrame
 		openFileOpts.add(opTxtFileMenuItem);
 		mnFile.add(openFileOpts);
 		
+		
+		//edit feature using stack reference
+		JMenuItem undoLast = new JMenuItem("Undo");
+		undoLast.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				if(project.getDeletedCarStack().isEmpty() &&
+						project.getDeletedCustomersStack().isEmpty())
+				{JOptionPane.showMessageDialog(getFrame(e),
+						"Neither cars nor customers are in the deleted stack to add back into VMS Pro.");}
+				else if(project.getDeletedCustomersStack().isEmpty())
+				{JOptionPane.showMessageDialog(getFrame(e),
+						"No customers are in the deleted stack to add back into VMS Pro.");}
+				else if(project.getDeletedCarStack().isEmpty())
+				{JOptionPane.showMessageDialog(getFrame(e),
+						"No vehicles are in the deleted stack to add back into VMS Pro.");}
+			}
+		});
+		JMenuItem redoLast = new JMenuItem("Redo");
+		redoLast.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				if(project.getDeletedCarStack().isEmpty())
+				{JOptionPane.showMessageDialog(getFrame(e),
+						"No cars are in the deleted stack to add back into VMS Pro.");}
+			}
+		});
+		
 		JMenuItem mntmExit = new JMenuItem("Exit");
 		mntmExit.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
+				List<Customer> lst = Transformer.sortCustomersByFistName(project.getCustomerList());
+				
 				//write all changes to file
-				if(FileHandler.writeToCustomerFile(project.getCustomerList()))
+				if(FileHandler.writeToCustomerFile(lst))
 				{JOptionPane.showMessageDialog(vmsproGUI.getFrame(e),
 						"All customer data has been saved to file.");}
 				else
-				{JOptionPane.showMessageDialog(vmsproGUI.getFrame(e), "No customer data was saved to file.");}
+				{JOptionPane.showMessageDialog(vmsproGUI.getFrame(e),
+						"No customer data was saved to file.");}
+				
+				if(FileHandler.writeVehicleToFile(project.getCarList()))
+				{JOptionPane.showMessageDialog(vmsproGUI.getFrame(e),
+						"All vehicle data has been saved to file.");}
+				else {JOptionPane.showMessageDialog(vmsproGUI.getFrame(e),
+						"No vehicle data was saved to file.");}
 				System.exit(0);
 			}
 		});
