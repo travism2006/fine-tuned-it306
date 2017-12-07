@@ -7,9 +7,25 @@ import vmspro.VMSPro_Constants.CarColors;
  * Specifies the fields related to vans in the real world, namely cargo space.
  * @author tmitchu2
  * */
+
 public final class Van extends Vehicle
 {
 	private double cargoSpace;
+	
+	/**
+	 * Specific constructor for the new field.
+	 * @param someMake the manufacturer of this car
+	 * @param someModel the model of the car obj
+	 * @param someColor the color chosen for this car
+	 * @param someYear the year of this car
+	 * @param someVIN the vin for the car, once set here never changed later
+	 * @param someCargo the amount of cargo space in the van
+	 * */
+	public Van(String makeN, String modelN, CarColors colorN, int yearN, String someVIN, double someCargo)
+	{
+		super(makeN, modelN, colorN, yearN, someVIN);
+		this.cargoSpace = someCargo;
+	}
 	
 	/**
 	 * Specific constructor for the new field.
@@ -55,8 +71,6 @@ public final class Van extends Vehicle
 	 * */
 	public String toString()
 	{
-		String out = super.toString();
-		out += String.format(", Cargo Space: %d", this.cargoSpace);
-		return out;
+		return "Van [cargoSpace=" + cargoSpace + "]";
 	}
 }

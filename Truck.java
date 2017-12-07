@@ -8,11 +8,27 @@ import vmspro.VMSPro_Constants.CarColors;
  * towing and carrying capacity.
  * @author tmitchu2
  * */
+
 public final class Truck extends Vehicle
 {
 	private double towCapacity;
 	private double carryCapacity;
 
+	/**
+	 * Specific constructor for each of the new two fields.
+	 * @param someMake the manufacturer of this car
+	 * @param someModel the model of the car obj
+	 * @param someColor the color chosen for this car
+	 * @param someYear the year of this car
+	 * @param someVIN the vin for the car, once set here never changed later
+	 * */
+	public Truck(String makeN, String modelN, CarColors colorN, int yearN, String someVIN, double someTow, double someCarry)
+	{
+		super(makeN, modelN, colorN, yearN, someVIN);
+		this.towCapacity = someTow;
+		this.carryCapacity = someCarry;
+	}
+	
 	/**
 	 * Specific constructor for each of the new two fields.
 	 * @param someMake the manufacturer of this car
@@ -79,8 +95,6 @@ public final class Truck extends Vehicle
 	 * */
 	public String toString()
 	{
-		String out = super.toString();
-		out += String.format(", Carrying Capacity: %d, Towing Capacity: %d", this.carryCapacity, this.towCapacity);
-		return out;
+		return "Truck [towing capacity=" + towCapacity + ", carrying capacity=" +carryCapacity+ "]";
 	}
 }

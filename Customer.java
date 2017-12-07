@@ -8,6 +8,7 @@ import java.util.HashMap;
  * @author hammar
  * @author tmitchu2
  * */
+
 public class Customer implements VMSPro_Standard_Behavior
 {
 	private static int counter = 0;
@@ -21,7 +22,7 @@ public class Customer implements VMSPro_Standard_Behavior
 	/**
 	 * Default constructor for id generation and initialization.
 	 */
-	public Customer()
+	private Customer()
 	{
 		counter++;
 		this.custID = counter;
@@ -285,6 +286,7 @@ public class Customer implements VMSPro_Standard_Behavior
 	 * */
 	public boolean equals(Customer someCust)
 	{
+		if(someCust == null)return false;
 		if(this.custID == someCust.getCustomerId())return true;
 		return false;
 	}

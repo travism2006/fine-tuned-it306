@@ -5,6 +5,7 @@ package vmspro;
  * @author hammar
  * @author tmitchu2
  * */
+
 public final class Address
 {
 	private String streetAddress;
@@ -102,8 +103,16 @@ public final class Address
 	 * */
 	public String toString()
 	{
-		String out = String.format("Street Address: %s\nCity: %s\nState: %s\nZipcode: %d\n\n",
+		String out = String.format("Street Address: %s, City: %s, State: %s, Zipcode: %d",
 				  this.streetAddress, this.city, this.state,this.zipCode);
 		return out;
 	}
+
+	/**
+	 * 
+	 * Retuns the int value for the zipcode field.
+	 * @return the int value for the zipcode field
+	 * */
+	public int getZip()
+	{return this.zipCode;}
 }

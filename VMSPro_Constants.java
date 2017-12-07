@@ -1,21 +1,22 @@
-package vmspro;
+package vmspro; 
 
 /**
  * Primarily used for reducing 'magic numbers and values' across the code base.
  * @author tmitchu2
  * */
+
 public interface VMSPro_Constants
 {
-	/*Useful for file consistency across the application.*/
-	String CarFileName = "vehicleData.txt";
-	String CustomerFileName = "customerData.txt";
-	
 	/*Needed for the JTxtFields in the GUIs and form inputs*/
 	int pixelColWidth = 17;
 	int TxtAreaHeight = 20;
 	int TxtAreaWidth = 13;
-	String TxtCarHeader = "Lot ID\tVIN\tMake\tModel\tYear\tColor\tType\tCustomer ID";
+	String TxtCarFullHeader = "Lot ID\tVIN\t\tMake\tModel\tYear\tColor\tType\tCustomer ID";
 	String TxtCustomerHeader = "ID Number\tFirst Name\tLast Name\tNumber of Cars\tAddress";
+	
+	String HasNoClient = "\n%d\t%s\t%s\t%s\t%d\t%s\t%s\tN\\A";
+	String HasClient = "\n%d\t%s\t%s\t%s\t%d\t%s\t%s\t%d";
+	String HasCar = "%d\t%s\t%s\t%d\t%s";
 	
 	/*Required from Phase 1 and beyond*/
 	int VIN_LENGTH = 17;
@@ -33,12 +34,12 @@ public interface VMSPro_Constants
 	}
 	public enum CarColors
 	{
-		RED, BLACK, WHITE, BLUE, GREEN, YELLOW, CYAN,ORANGE,GRAY
+		RED, BLACK, WHITE, BLUE
 	}
 
 	/*Options for sorting lists of cars and customers*/
 	public enum SortOptions
-	{INSERT, MERGE, QUICK,SELECT}
+	{INSERT, MERGE, QUICK}
 	
 	/*Search options for searching customers or cars*/
 	public enum SearchOptions

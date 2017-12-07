@@ -10,6 +10,7 @@ import vmspro.VMSPro_Constants.CarColors;
  * @author hammar
  * @author tmitchu2
  * */
+
 public class Vehicle implements VMSPro_Standard_Behavior
 {
 	private int lotNumber;
@@ -29,6 +30,25 @@ public class Vehicle implements VMSPro_Standard_Behavior
 	{
 		carTotal++;
 		this.lotNumber = carTotal;
+		this.cust = new HashMap<>();
+	}
+	
+	/**
+	 * Specific constructor for assignment of inputs to respective fields.
+	 * @param someMake the manufacturer of this car
+	 * @param someModel the model of the car obj
+	 * @param someColor the color chosen for this car
+	 * @param someYear the year of this car
+	 * @param someVIN the vin for the car, once set here never changed later
+	 */
+	public Vehicle(String someMake, String someModel, CarColors someColor, int someYear, String someVIN)
+	{
+		this();
+		this.make = someMake;
+		this.model = someModel;
+		this.color = someColor;
+		this.year = someYear;
+		this.vin = someVIN;
 	}
 	
 	/**
@@ -42,7 +62,7 @@ public class Vehicle implements VMSPro_Standard_Behavior
 	 */
 	public Vehicle(String someMake, String someModel, CarColors someColor, int someYear, String someVIN, Customer someCust)
 	{
-		this();
+		this(someMake,someModel,someColor,someYear,someVIN);
 		this.make = someMake;
 		this.model = someModel;
 		this.color = someColor;
@@ -106,19 +126,31 @@ public class Vehicle implements VMSPro_Standard_Behavior
 	}
 	
 	/**
-	 * Nonvalidating method for associating a single customer to this
+	 * Validating method for associating a single customer to this
 	 * car.  Does not allow null pointers to a customer object.
 	 * @param someCust the customer to be linked to
 	 * */
 	public void linkCustomer(Customer someCust)
-	{this.cust.put(someCust.getCustomerId(), someCust);}
+	{
+		if(someCust != null)
+		{this.cust.put(someCust.getCustomerId(), someCust);}
+		
+	}
 	
 	/**
 	 * Returns the customer linked to this vehicle.
 	 * @return the customer linked to this vehicle
 	 * */
 	public Customer getCustomer()
-	{return (Customer) cust.values().toArray()[0];}
+	{
+		if(this.cust.isEmpty())return null;
+		else if(this.cust.values().contains(null))return null;
+		
+		Object client = cust.values().toArray()[0];
+		if(client == null)return null;
+		else if(client.equals(null))return null;
+		return (Customer)client;
+	}
 	
 	/**
 	 * Returns the lot # of this car.
