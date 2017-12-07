@@ -3,6 +3,7 @@ package vmspro;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -11,9 +12,6 @@ import java.util.LinkedList;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-
-//import java.awt.EventQueue;
-
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -26,13 +24,25 @@ import javax.swing.SwingUtilities;
 import vmspro.VMSPro_Constants.CarColors;
 import vmspro.VMSPro_Constants.CarTypes;
 
+/**
+ * JDialog instance class that uses a primary panel to show display all data
+ * about vehicles and their corresponding type.
+ * @author tmitchu2
+ * */
+
+
 public class DialManageVehicles extends JDialog
 {
 	private VMSPro sysApp;
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+
 	private JButton addCarBttn, editCarBttn, sortCarsBttn, remvCarBttn, cancelBttn;
 	private JTextArea totalCarArea;
+
+	private JButton addCarBttn, sortCarsBttn, remvCarBttn, cancelBttn;
+	private static JTextArea totalCarArea;
+
 	private JTextField vinInput,makeInput,modelInput,yearInput,custInput;
 	private JComboBox<CarColors> colorInput;
 	private JComboBox<String> convertibleSedan;
@@ -86,6 +96,7 @@ public class DialManageVehicles extends JDialog
 				case "SEDAN":
 					car= makeAndAddSedan(newCarForm);
 					
+
 					lotid = car.getLotNumber(); year = car.getYear();
 					custID = -2;
 					if((Customer)car.getCustomer() == null)custID = -1;
@@ -112,10 +123,41 @@ public class DialManageVehicles extends JDialog
 						totalCarArea.append("\n"+line);
 					}
 					break;
+
+					if(car != null)
+					{
+						lotid = car.getLotNumber(); year = car.getYear();
+						custID = -2;
+						if((Customer)car.getCustomer() == null)custID = -1;
+						else if(((Customer)car.getCustomer()).equals(null))custID = -1;
+						try{
+							custID = car.getCustomer().getCustomerId();
+						}catch(NullPointerException npe)
+						{custID = -1;}
+						make = car.getMake(); model = car.getModel();
+						vin = car.getVin();
+						color = car.getColor();
+						
+						if(custID == -2 || custID == -1)
+						{
+							String line = String.format(
+									"\n%d\t%s\t%s\t%s\t%d\t%s\t%s\tN\\A", lotid,
+									vin, make, model, year, color, "SEDAN")+"\n";
+							totalCarArea.append(line);
+						}
+						else
+						{String line = String.format(
+								"\n%d\t%s\t%s\t%s\t%d\t%s\t%s\t%d",lotid,vin,
+								make, model, year, color, "SEDAN", custID)+"\n";
+							totalCarArea.append(line);
+						}
+					}break;
+
 				
 				case "TRUCK":
 					car = makeAndAddTruck(newCarForm);
 					
+
 					lotid = car.getLotNumber(); year = car.getYear();
 					custID = -2;
 					if((Customer)car.getCustomer() == null)custID = -1;
@@ -142,10 +184,41 @@ public class DialManageVehicles extends JDialog
 						totalCarArea.append("\n"+line);
 					}
 					break;
+
+					if(car != null)
+					{
+						lotid = car.getLotNumber(); year = car.getYear();
+						custID = -2;
+						if((Customer)car.getCustomer() == null)custID = -1;
+						else if(((Customer)car.getCustomer()).equals(null))custID = -1;
+						try{
+							custID = car.getCustomer().getCustomerId();
+						}catch(NullPointerException npe)
+						{custID = -1;}
+						make = car.getMake(); model = car.getModel();
+						vin = car.getVin();
+						color = car.getColor();
+						
+						if(custID == -2 || custID == -1)
+						{
+							String line = String.format(
+									"\n%d\t%s\t%s\t%s\t%d\t%s\t%s\tN\\A", lotid,
+									vin, make, model, year, color, "TRUCK")+"\n";
+							totalCarArea.append("\n"+line);
+						}
+						else
+						{String line = String.format(
+								"\n%d\t%s\t%s\t%s\t%d\t%s\t%s\t%d",lotid,vin,
+								make, model, year, color, "TRUCK", custID)+"\n";
+							totalCarArea.append(line);
+						}
+					}break;
+
 				
 				case "VAN":
 					car = makeAndAddVan(newCarForm);
 					
+
 					lotid = car.getLotNumber(); year = car.getYear();
 					custID = -2;
 					if((Customer)car.getCustomer() == null)custID = -1;
@@ -173,6 +246,36 @@ public class DialManageVehicles extends JDialog
 					}
 					
 					break;
+
+					if(car != null)
+					{
+						lotid = car.getLotNumber(); year = car.getYear();
+						custID = -2;
+						if((Customer)car.getCustomer() == null)custID = -1;
+						else if(((Customer)car.getCustomer()).equals(null))custID = -1;
+						try{
+							custID = car.getCustomer().getCustomerId();
+						}catch(NullPointerException npe)
+						{custID = -1;}
+						make = car.getMake(); model = car.getModel();
+						vin = car.getVin();
+						color = car.getColor();
+						
+						if(custID == -2 || custID == -1)
+						{
+							String line = String.format(
+									VMSPro_Constants.HasNoClient, lotid,
+									vin, make, model, year, color, "VAN")+"\n";
+							totalCarArea.append("\n"+line);
+						}
+						else
+						{String line = String.format(
+								VMSPro_Constants.HasClient,lotid,vin,
+								make, model, year, color, "VAN", custID)+"\n";
+							totalCarArea.append("\n"+line);
+						}
+					}break;
+
 				}
 				JDialog dial = returnDialog(e);
 				dial.requestFocus();
@@ -216,12 +319,28 @@ public class DialManageVehicles extends JDialog
 			}
 		});
 		
+
 		editCarBttn = new JButton("Edit");
 		editCarBttn.addActionListener(new ActionListener()
+
+		sortCarsBttn = new JButton("Sort");
+		sortCarsBttn.addActionListener(new ActionListener()
+
 		{
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
+				//TODO:FIXME:Ask What Sort--use JOP.showOptionDialog(...)
+				//    options = Merge, Quick, Insert, Select->init.val = Merge
+			}
+		});
+		
+		remvCarBttn = new JButton("Remove");
+		remvCarBttn.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+
 				Iterator<String> vinListIT = sysApp.getVINList().iterator();
 				String hold = "";
 				while(vinListIT.hasNext())
@@ -237,6 +356,7 @@ public class DialManageVehicles extends JDialog
 							JOptionPane.showInputDialog(contentPane,
 									"What type of vehicle:", "Edit Vehicle",
 									JOptionPane.OK_CANCEL_OPTION, null, opts, opts[0]));
+
 					
 					JPanel editPanel = makeEditPanel();
 					
@@ -335,10 +455,37 @@ public class DialManageVehicles extends JDialog
 			}
 		});
 		remvCarBttn = new JButton("Remove");
+
+					Vehicle car = sysApp.getVehicleByVIN(ans);
+					sysApp.removeCarX(car);
+					JOptionPane.showMessageDialog(contentPane,
+							"The vehicle with VIN "+ car.getVin()+" has been removed");
+					
+					//now show empty string where the car's string was in the
+					//  jtextarea
+					String dat = DialManageVehicles.getTxtArea().getText();
+					if(car.getCustomer() == null)
+					{
+						dat.replace(DialManageVehicles.doAddLineNoClient(
+								car.getLotNumber(),car.getVin(), car.getMake(),
+								car.getModel(), car.getYear(), car.getColor()), "");
+					}
+					else
+					{
+						dat.replace(DialManageVehicles.doAddLineWithClient(
+								car.getLotNumber(),car.getVin(), car.getMake(),
+								car.getModel(), car.getYear(), car.getColor(),
+								car.getCustomer().getCustomerId()), "");
+					}
+					
+				}
+			}
+		});
+		
+
 		cancelBttn = new JButton("Cancel");
 		cancelBttn.addActionListener(new ActionListener()
 		{
-			@Override
 			public void actionPerformed(ActionEvent e)
 			{
 				JDialog jd = returnDialog(e);
@@ -354,12 +501,14 @@ public class DialManageVehicles extends JDialog
 		totalCarArea.setEditable(false);
 		contentPane.add(totalCarArea);
 		contentPane.add(addCarBttn);
+
 		contentPane.add(editCarBttn);
 		contentPane.add(sortCarsBttn);
 		contentPane.add(remvCarBttn);
 		contentPane.add(cancelBttn);
 	}
 	
+
 	private Vehicle editSedanPnl(JPanel somePanel, Sedan someCar)
 	{
 		//make sedan specific input field and label
@@ -500,6 +649,7 @@ public class DialManageVehicles extends JDialog
 		while(carIT.hasNext())
 		{
 			Vehicle car = carIT.next();
+
 			
 			int lotid = car.getLotNumber(), year = car.getYear(),
 					custID = -2;
@@ -544,6 +694,52 @@ public class DialManageVehicles extends JDialog
 				
 			}
 			
+			if(car != null)
+			{
+				int lotid = car.getLotNumber(), year = car.getYear(),
+						custID = -2;
+				if((Customer)car.getCustomer() == null)custID = -1;
+				else if(((Customer)car.getCustomer()).equals(null))custID = -1;
+				try{
+					custID = car.getCustomer().getCustomerId();
+				}catch(NullPointerException e)
+				{custID = -1;}
+				String make = car.getMake(), model = car.getModel(),
+						vin = car.getVin();
+				CarColors color = car.getColor();
+				if(car instanceof Sedan)
+				{
+					if(custID == -2 || custID == -1)
+						line+=String.format("\n%d\t%s\t\t%s\t%s\t%d\t%s\t%s\tN\\A", lotid,
+							vin, make, model, year, color, "SEDAN")+"\n";
+					else
+					{
+						line+=String.format("\n%d\t%s\t\t%s\t%s\t%d\t%s\t%s\tN\\A", lotid,
+								vin, make, model, year, color, "SEDAN",custID)+"\n";
+					}
+				}
+				else if(car instanceof Truck)
+				{
+					if(custID == -2 || custID == -1)
+					{line+=String.format("\n%d\t%s\t\t%s\t%s\t%d\t%s\t%s\tN\\A", lotid,
+							vin, make, model, year, color, "TRUCK")+"\n";}
+					else
+					{
+						line+=String.format("\n%d\t%s\t\t%s\t%s\t%d\t%s\t%s\t%d", lotid,
+								vin, make, model, year, color, "TRUCK",custID)+"\n";
+					}
+				}
+				else if(car instanceof Van)
+				{
+					if(custID == -2 || custID == -1)
+					{line+=String.format("\n%d\t%s\t\t%s\t%s\t%d\t%s\t%s\tN\\A", lotid,
+								vin, make, model, year, color, "VAN")+"\n";}
+					else
+					{line+=String.format("\n%d\t%s\t\t%s\t%s\t%d\t%s\t%s\t%d", lotid,
+							vin, make, model, year, color, "VAN",custID)+"\n";}
+				}
+			}
+
 		}
 		someArea.setEditable(true);
 		someArea.append(line);
@@ -560,6 +756,7 @@ public class DialManageVehicles extends JDialog
 		somePanel.add(convertiblelbl);
 		somePanel.add(convertibleSedan);
 		
+
 		checkVehicleInput(somePanel);
 		
 		String vin = vinInput.getText();
@@ -587,6 +784,37 @@ public class DialManageVehicles extends JDialog
 		
 		sysApp.addCar(newSedan);
 		return newSedan;
+
+		if(checkVehicleInput(somePanel))
+		{
+			String vin = vinInput.getText();
+			String make = makeInput.getText();
+			String model = modelInput.getText();
+			int year;
+			try {
+				year = Integer.parseInt(yearInput.getText());
+			} catch (NumberFormatException e1)
+			{year = 1;}
+			CarColors color = (CarColors) colorInput.getSelectedItem();
+			Customer custX;
+			try
+			{
+				custX = sysApp.getCustomerByID(
+						Integer.parseInt(custInput.getText()));
+			} catch (NumberFormatException e)
+			{custX = null;}
+			boolean mayConvert = Boolean.parseBoolean(
+					(String)convertibleSedan.getSelectedItem());
+			Vehicle newSedan;
+			if(custX != null && !custX.equals(null))
+			{newSedan= new Sedan(custX,make, model, color,year, vin,mayConvert);}
+			newSedan = new Sedan(make, model, color,year, vin,mayConvert);
+			
+			sysApp.addCar(newSedan);
+			return newSedan;
+		}
+		else return null;
+		
 	}
 	
 	private Vehicle makeAndAddTruck(JPanel somePanel)
@@ -600,6 +828,7 @@ public class DialManageVehicles extends JDialog
 		somePanel.add(carryInput);
 		somePanel.add(towlbl);somePanel.add(towInput);
 		
+
 		checkVehicleInput(somePanel);
 		
 		String vin = vinInput.getText();
@@ -635,6 +864,46 @@ public class DialManageVehicles extends JDialog
 		newTruck = new Truck(make, model, color, year, vin, tow, carry);
 		sysApp.addCar(newTruck);
 		return newTruck;
+
+		if(checkVehicleInput(somePanel))
+		{
+			String vin = vinInput.getText();
+			String make = makeInput.getText();
+			String model = modelInput.getText();
+			int year;
+			try{
+				year = Integer.parseInt(yearInput.getText());
+			} catch (NumberFormatException e1)
+			{year = 1;}
+			CarColors color = (CarColors) colorInput.getSelectedItem();
+			Customer custX;
+			try{
+				custX = sysApp.getCustomerByID(
+						Integer.parseInt(custInput.getText()));
+			}catch(NumberFormatException e)
+			{custX = null;}
+			
+			double tow;
+			try{
+				tow = Double.parseDouble(towInput.getText());
+			} catch (NumberFormatException e)
+			{tow = -1.0;}
+			double carry;
+			try{
+				carry = Double.parseDouble(carryInput.getText());
+			}catch(NumberFormatException e)
+			{carry = -1.0;}
+			
+			Vehicle newTruck;
+			if(custX != null && custX.equals(null))
+			{newTruck  = new Truck(make, model, color,year, vin,custX, tow,carry);}
+			newTruck = new Truck(make, model, color, year, vin, tow, carry);
+			sysApp.addCar(newTruck);
+			return newTruck;
+		}
+		else return null;
+		
+
 	}
 	
 	private Vehicle makeAndAddVan(JPanel somePanel)
@@ -645,6 +914,7 @@ public class DialManageVehicles extends JDialog
 		somePanel.add(cargolbl);
 		somePanel.add(cargoInput);
 		
+
 		checkVehicleInput(somePanel);
 		
 		String vin = vinInput.getText();
@@ -674,6 +944,40 @@ public class DialManageVehicles extends JDialog
 		newVan = new Van(make, model, color, year, vin, someCargo);
 		this.sysApp.addCar(newVan);
 		return newVan;
+
+		if(checkVehicleInput(somePanel))
+		{
+			String vin = vinInput.getText();
+			String make = makeInput.getText();
+			String model = modelInput.getText();
+			int year;
+			try{
+				year = Integer.parseInt(yearInput.getText());
+			}catch(NumberFormatException e1)
+			{year = 1;}
+			CarColors color = (CarColors) colorInput.getSelectedItem();
+			Customer custX;
+			try{
+				custX = sysApp.getCustomerByID(
+						Integer.parseInt(custInput.getText()));
+			}catch(NumberFormatException e)
+			{custX = null;}
+			double someCargo;
+			try{
+				someCargo = Double.parseDouble(cargoInput.getText());
+			}catch(NumberFormatException e)
+			{someCargo = -1.0;}
+			
+			Vehicle newVan;
+			if(custX != null && custX.equals(null))
+			{newVan = new Van(custX,make,model,color,year,vin,someCargo);}
+			newVan = new Van(make, model, color, year, vin, someCargo);
+			this.sysApp.addCar(newVan);
+			return newVan;
+		}
+		else return null;
+		
+
 	}
 	
 	/**
@@ -681,7 +985,11 @@ public class DialManageVehicles extends JDialog
 	 * making vehicle objects.
 	 * @param somePanel the panel to refer to that is the parent for any JOP
 	 * */
+
 	private void checkVehicleInput(JPanel somePanel)
+
+	private boolean checkVehicleInput(JPanel somePanel)
+
 	{
 		int create = -1;
 		do
@@ -703,7 +1011,10 @@ public class DialManageVehicles extends JDialog
 						goodVIN = VMSPro.checkVIN(vinInput.getText());
 					}
 					else if(resp == JOptionPane.NO_OPTION)
+
 					{goodVIN = true;}
+					{return false;}
+
 				}
 				
 				/*CAR MAKE CHECK*/
@@ -719,7 +1030,11 @@ public class DialManageVehicles extends JDialog
 						goodMake = VMSPro.checkString(makeInput.getText());
 					}
 					else if(resp == JOptionPane.NO_OPTION)
+
 					{goodMake = true;}
+
+					{return false;}
+
 				}
 				
 				//check the model of the car input
@@ -733,7 +1048,11 @@ public class DialManageVehicles extends JDialog
 						create = JOptionPane.showConfirmDialog(null, somePanel,
 								"Add Vehicle and Type", JOptionPane.OK_CANCEL_OPTION);
 					}else if(resp == JOptionPane.NO_OPTION)
+
 					{goodModel = true;}
+
+					{return false;}
+
 				}
 				
 				/*Check the input for the year of the car*/
@@ -747,7 +1066,10 @@ public class DialManageVehicles extends JDialog
 						create = JOptionPane.showConfirmDialog(null, somePanel,
 								"Add Vehicle and Type", JOptionPane.OK_CANCEL_OPTION);
 					}else if(resp == JOptionPane.NO_OPTION)
+
 					{goodYear = true;}
+					{return false;}
+
 				}
 				
 				//check for the customer id field if valid or not
@@ -764,6 +1086,7 @@ public class DialManageVehicles extends JDialog
 				create = JOptionPane.CANCEL_OPTION;
 			}
 		}while(create != JOptionPane.CANCEL_OPTION);
+
 	}
 	
 	/*for editing cars only*/
@@ -818,6 +1141,9 @@ public class DialManageVehicles extends JDialog
 				create = JOptionPane.CANCEL_OPTION;
 			}
 		}while(create != JOptionPane.CANCEL_OPTION);
+
+		return true;
+
 	}
 	
 	/**
@@ -836,6 +1162,28 @@ public class DialManageVehicles extends JDialog
 	
 	/**Returns the txt area in the dialog for accessing and filling of the
 	 * primary "table" in the main window.*/
+
 	public JTextArea getTxtArea()
 	{return totalCarArea;}
+
+	public static JTextArea getTxtArea()
+	{return totalCarArea;}
+	
+	public static String doAddLineNoClient(int lotid, String vin, String make, String model, int year, CarColors color)
+	{
+		String line = String.format(
+				VMSPro_Constants.HasNoClient, lotid,
+				vin, make, model, year, color, "VAN")+"\n";
+		return line;
+		//totalCarArea.append("\n"+line);
+	}
+	
+	public static String doAddLineWithClient(int lotid, String vin, String make, String model, int year, CarColors color, int custID)
+	{
+		String line = String.format(
+				VMSPro_Constants.HasClient, lotid,
+				vin, make, model, year, color, "VAN", custID)+"\n";
+		return line;
+		//totalCarArea.append("\n"+line);
+	}
 }

@@ -1,11 +1,12 @@
-package vmspro;
+package vmspro; 
 
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Iterator;
-
+import java.util.List;
+import java.util.NoSuchElementException;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
@@ -16,15 +17,14 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EtchedBorder;
 
 import vmspro.VMSPro_Constants.CarTypes;
 
-import java.awt.Toolkit;
 import java.awt.Font;
+
 
 /**
  * Gui DDC file for the VMS Pro application.  This is primarily build off of
@@ -63,7 +63,6 @@ public class vmsproGUI extends JFrame
 	 */
 	public vmsproGUI()
 	{
-		setIconImage(Toolkit.getDefaultToolkit().getImage(vmsproGUI.class.getResource("/vmspro/VMS_Pro_Icon.ico")));
 		setTitle("VMS Pro");
 		setBounds(100, 100, 1000, 650);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -92,25 +91,14 @@ public class vmsproGUI extends JFrame
 				DialManageCustomers mngClients = new DialManageCustomers(fr,project);
 				mngClients.setVisible(true);
 			}});
-		
-		JTextArea someClientsTxtArea = new JTextArea(10,3);
-		someClientsTxtArea.setEditable(false);
-		someClientsTxtArea.setLineWrap(true);
-		someClientsTxtArea.setWrapStyleWord(true);
-		someClientsTxtArea.setText(VMSPro_Constants.TxtSomeCustomerHeader);
 		 
 		GroupLayout gl_clientPanel = new GroupLayout(clientPanel);
 		gl_clientPanel.setHorizontalGroup(
 			gl_clientPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_clientPanel.createSequentialGroup()
-					.addGroup(gl_clientPanel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_clientPanel.createSequentialGroup()
-							.addComponent(lblCustomers)
-							.addGap(154)
-							.addComponent(btnManageCustomers))
-						.addGroup(gl_clientPanel.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(someClientsTxtArea, GroupLayout.PREFERRED_SIZE, 388, GroupLayout.PREFERRED_SIZE)))
+					.addComponent(lblCustomers)
+					.addGap(154)
+					.addComponent(btnManageCustomers)
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		gl_clientPanel.setVerticalGroup(
@@ -119,9 +107,7 @@ public class vmsproGUI extends JFrame
 					.addGroup(gl_clientPanel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblCustomers)
 						.addComponent(btnManageCustomers))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(someClientsTxtArea, GroupLayout.PREFERRED_SIZE, 191, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addContainerGap(207, Short.MAX_VALUE))
 		);
 		gl_clientPanel.setAutoCreateGaps(true);
 		
@@ -181,15 +167,15 @@ public class vmsproGUI extends JFrame
 					{report += clientIT.next().toString()+";\n";}
 					report += "\n\n";
 				}
-				report += "--There are no Customers to include in this report--";
+				else report += "--There are no Customers to include in this report--";
 				JFrame fr = getFrame(e);
 				JOptionPane.showMessageDialog(fr, report);
 			}
 		});
 		
 		JButton btnTypesOfVehicles = new JButton("Types of Vehicles");
-		btnTypesOfVehicles.addActionListener(new ActionListener() {
-			
+		btnTypesOfVehicles.addActionListener(new ActionListener()
+		{
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
@@ -200,26 +186,26 @@ public class vmsproGUI extends JFrame
 				{
 					String[] opts = { CarTypes.SEDAN.toString(), CarTypes.TRUCK.toString(), CarTypes.VAN.toString() };
 					int ans = JOptionPane.showOptionDialog(fr, "What type of vehicle do you want a report on?",
-							"Specify The Car Type", JOptionPane.QUESTION_MESSAGE, JOptionPane.INFORMATION_MESSAGE, null,
+							"Specify The Car Type", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
 							opts, opts[0]);
 					switch (ans) {
 					case 0:
 						//get all sedan cars and report on them
 						Iterator<Sedan> sedans = project.getSedanList().iterator();
 						while(sedans.hasNext())
-						{report += sedans.next().toString();}
+						{report += sedans.next().toString()+"\n";}
 						break;
 					case 1:
 						//get all truck cars and report
 						Iterator<Truck> trucks = project.getTruckList().iterator();
 						while(trucks.hasNext())
-						{report += trucks.next().toString();}
+						{report += trucks.next().toString()+"\n";}
 						break;
 					case 2:
 						//get all vans and report
 						Iterator<Van> vans = project.getVanList().iterator();
 						while(vans.hasNext())
-						{report += vans.next().toString();}
+						{report += vans.next().toString()+"\n";}
 						break;
 					}
 				}
@@ -242,8 +228,13 @@ public class vmsproGUI extends JFrame
 					while(carsNoClient.hasNext())
 					{
 						Vehicle car = carsNoClient.next();
-						if(car instanceof Sedan)
-						{report += ((Sedan)carsNoClient.next()).toString()+";\n";}
+						if(car instanceof Sedan && car != null)
+						{
+							try {
+								report += ((Sedan)carsNoClient.next()).toString()+";\n";
+							} catch (NoSuchElementException e1)
+							{}
+						}
 						else if(car instanceof Truck)
 						{report += ((Truck)carsNoClient.next()).toString()+";\n";}
 						else if(car instanceof Van)
@@ -341,24 +332,13 @@ public class vmsproGUI extends JFrame
 			}
 		});
 		
-		JTextArea someCarsTxtArea = new JTextArea(10,3);
-		someCarsTxtArea.setEditable(false);
-		someCarsTxtArea.setLineWrap(true);
-		someCarsTxtArea.setWrapStyleWord(true);
-		someCarsTxtArea.setText(VMSPro_Constants.TxtSomeCarHeader);
-		
 		GroupLayout gl_carPanel = new GroupLayout(carPanel);
 		gl_carPanel.setHorizontalGroup(
 			gl_carPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_carPanel.createSequentialGroup()
-					.addGroup(gl_carPanel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_carPanel.createSequentialGroup()
-							.addComponent(lblVehicles)
-							.addGap(188)
-							.addComponent(btnManageVehicles))
-						.addGroup(gl_carPanel.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(someCarsTxtArea, GroupLayout.PREFERRED_SIZE, 391, GroupLayout.PREFERRED_SIZE)))
+					.addComponent(lblVehicles)
+					.addGap(188)
+					.addComponent(btnManageVehicles)
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		gl_carPanel.setVerticalGroup(
@@ -367,9 +347,7 @@ public class vmsproGUI extends JFrame
 					.addGroup(gl_carPanel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblVehicles, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnManageVehicles))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(someCarsTxtArea, GroupLayout.PREFERRED_SIZE, 186, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addContainerGap(203, Short.MAX_VALUE))
 		);
 		
 		carPanel.setLayout(gl_carPanel);
@@ -388,13 +366,85 @@ public class vmsproGUI extends JFrame
 		setJMenuBar(menuBar);
 		
 		JMenu mnFile = new JMenu("File");
-		menuBar.add(mnFile);
+		JMenu editMenu = new JMenu("Edit");
+		
+		menuBar.add(mnFile);menuBar.add(editMenu);
+		
+		//read from file feature
+		JMenu openFileOpts = new JMenu("Open");
+		JMenuItem opTxtFileMenuItem = new JMenuItem("Text File");
+		opTxtFileMenuItem.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				//TODO: read from File "vmsData.txt"
+				List<Customer> clientList = FileHandler.readToCustomerObject();
+				if(clientList == null)
+				{JOptionPane.showMessageDialog(vmsproGUI.getFrame(e),
+						"Empty client file or file not found.");}
+				
+				List<Vehicle> carList = FileHandler.readVehicleToObject();
+				if(carList == null)
+				{JOptionPane.showMessageDialog(vmsproGUI.getFrame(e),
+						"Empty vehicle file or file not found.");}
+			}
+		});
+		
+		openFileOpts.add(opTxtFileMenuItem);
+		mnFile.add(openFileOpts);
+		
+		
+		//edit feature using stack reference
+		JMenuItem undoLast = new JMenuItem("Undo");
+		undoLast.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				if(project.getDeletedCarStack().isEmpty() &&
+						project.getDeletedCustomersStack().isEmpty())
+				{JOptionPane.showMessageDialog(getFrame(e),
+						"Neither cars nor customers are in the deleted stack to add back into VMS Pro.");}
+				else if(project.getDeletedCustomersStack().isEmpty())
+				{JOptionPane.showMessageDialog(getFrame(e),
+						"No customers are in the deleted stack to add back into VMS Pro.");}
+				else if(project.getDeletedCarStack().isEmpty())
+				{JOptionPane.showMessageDialog(getFrame(e),
+						"No vehicles are in the deleted stack to add back into VMS Pro.");}
+			}
+		});
+		JMenuItem redoLast = new JMenuItem("Redo");
+		redoLast.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				if(project.getDeletedCarStack().isEmpty())
+				{JOptionPane.showMessageDialog(getFrame(e),
+						"No cars are in the deleted stack to add back into VMS Pro.");}
+			}
+		});
 		
 		JMenuItem mntmExit = new JMenuItem("Exit");
 		mntmExit.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
-			{System.exit(0);}
+			{
+				List<Customer> lst = Transformer.sortCustomersByFistName(project.getCustomerList());
+				
+				//write all changes to file
+				if(FileHandler.writeToCustomerFile(lst))
+				{JOptionPane.showMessageDialog(vmsproGUI.getFrame(e),
+						"All customer data has been saved to file.");}
+				else
+				{JOptionPane.showMessageDialog(vmsproGUI.getFrame(e),
+						"No customer data was saved to file.");}
+				
+				if(FileHandler.writeVehicleToFile(project.getCarList()))
+				{JOptionPane.showMessageDialog(vmsproGUI.getFrame(e),
+						"All vehicle data has been saved to file.");}
+				else {JOptionPane.showMessageDialog(vmsproGUI.getFrame(e),
+						"No vehicle data was saved to file.");}
+				System.exit(0);
+			}
 		});
 		mnFile.add(mntmExit);
 	}

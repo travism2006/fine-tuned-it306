@@ -1,5 +1,5 @@
 package vmspro;
-
+ 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,6 +19,7 @@ import vmspro.VMSPro_Constants.CarTypes;
  * @author tmitchu2
  * @author hammar
  * */
+
 public final class VMSPro
 {
 	private LinkedList<Customer> listCust;
@@ -113,11 +114,20 @@ public final class VMSPro
 		
 		if(listCars.remove(someCar))
 		{
-			Customer custX = someCar.getCustomer();
-			custX.removeCar(someCar);
-			someCar.linkCustomer(null);
-			deletedCars.push(someCar);
-			return true;
+			if(someCar.getCustomer() != null)
+			{
+				Customer custX = someCar.getCustomer();
+				custX.removeCar(someCar);
+				someCar.linkCustomer(null);
+				deletedCars.push(someCar);
+				return true;
+			}
+			else
+			{
+				someCar.linkCustomer(null);
+				deletedCars.push(someCar);
+				return true;
+			}
 		}
 		return false;
 	}
@@ -202,8 +212,9 @@ public final class VMSPro
 		{
 			Vehicle car = listCars.removeFirst();
 			Customer cust = car.getCustomer();
-			cust.removeCar(car);
+			if(cust != null)cust.removeCar(car);
 			//possible redundancy--car.linkCustomer(null);
+			deletedCars.push(car);
 			return true;
 		}catch(NoSuchElementException e)
 		{return false;}
@@ -221,8 +232,9 @@ public final class VMSPro
 		{
 			Vehicle car = listCars.removeLast();
 			Customer cust = car.getCustomer();
-			cust.removeCar(car);
+			if(cust != null)cust.removeCar(car);
 			//possible redundancy--car.linkCustomer(null);
+			deletedCars.push(car);
 			return true;
 		}catch(NoSuchElementException e)
 		{return false;}
@@ -766,6 +778,35 @@ public final class VMSPro
 		{return false;}
 		else if(someStr.equals(null))
 		{return false;}
+		
+		for(int i = 0; i< someStr.length(); i++)
+		{
+			if(!Character.isLetterOrDigit(someStr.charAt(i)))
+			{return false;}
+		}
+		return true;
+	}
+	
+	/**
+	 * Determines the validity of a given string
+	 * @param someStr the string to test on
+	 * @return whether it passes the tests or not
+	 * */
+	public static boolean checkStreetCity(String someStr)
+	{
+		if(someStr == null)
+		{return false;}
+		else if(someStr.equals(""))
+		{return false;}
+		else if(someStr.equals(null))
+		{return false;}
+		
+		for(int i = 0; i< someStr.length(); i++)
+		{
+			if(!Character.isLetterOrDigit(someStr.charAt(i)) &&
+					someStr.charAt(i) !=' ')
+			{return false;}
+		}
 		return true;
 	}
 	
@@ -779,7 +820,7 @@ public final class VMSPro
 	{
 		if(!checkString(someStr))return false;
 		else if(someStr.length() != VMSPro_Constants.VIN_LENGTH)
-			{return false;}
+		{return false;}
 		return true;
 	}
 	

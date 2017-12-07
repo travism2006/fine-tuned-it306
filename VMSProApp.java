@@ -1,5 +1,5 @@
 package Phase4;
-
+ 
 /**
  * VMS Pro desktop application is started through this file.
  * The 'manager' file works with the gui file(s) to create
@@ -7,6 +7,7 @@ package Phase4;
  * For VMS Pro, Java's Swing and AWT features are used.
  * @author tmitchu2
  * */
+
 public class VMSProApp
 {
 	/**

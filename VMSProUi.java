@@ -1,4 +1,4 @@
-package Phase4;
+package Phase4; 
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;
@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import java.awt.SystemColor;
 import javax.swing.JTable;
 //import javax.swing.JButton;
+
 
 @SuppressWarnings("serial")
 public class vmsproUi extends JFrame
