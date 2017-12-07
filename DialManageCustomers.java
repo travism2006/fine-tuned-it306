@@ -1,5 +1,16 @@
 package vmspro;
 
+
+import java.awt.Dialog.ModalityType;
+import java.awt.Window.Type;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,15 +35,22 @@ import javax.swing.SwingUtilities;
  * @author tmitchu2
  * */
 
+
 public class DialManageCustomers extends JDialog
 {
 	private VMSPro sysApp;
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+
+	private JButton addCarBttn, editCarBttn, sortCarsBttn, remvCarBttn, cancelBttn;
+	private JTextArea totalCarArea;
+	private JTextField vinInput,makeInput,modelInput,yearInput,custInput;
+
 	private JButton addClientBttn, sortClientsBttn, remvClientBttn, cancelBttn;
 	private static JTextArea totalCustomerArea;
 	private JTextField fnameInput,lnameInput,zipcodeInput,streetInput, stateInput,cityInput;
 	private JComboBox<String> carVinInput;
+
 
 	/**
 	 * Create the dialog.
@@ -49,6 +67,11 @@ public class DialManageCustomers extends JDialog
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		
 		this.sysApp = app;
+
+	}
+
+}
+
 		makeMainPanel(app);
 		this.setContentPane(contentPane);
 	}
